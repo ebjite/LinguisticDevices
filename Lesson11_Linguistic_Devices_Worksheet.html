@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Linguistic Devices Worksheet — HUMN 110</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+:root {
+  --ink:    #1A1035;
+  --bg:     #F7F4FF;
+  --white:  #FFFFFF;
+  --border: #DDD6F5;
+  --gold:   #F5C842;
+  --coral:  #FF6B6B;
+  --teal:   #3ECFCF;
+  --lav:    #C9B8FF;
+  --green:  #82E0AA;
+  --pink:   #F0A8D0;
+  --mid:    #2D1B5E;
+  /* highlight swatches */
+  --hl1: #FFD966;
+  --hl2: #FF9999;
+  --hl3: #82E0AA;
+  --hl4: #85C1E9;
+  --hl5: #F0A8D0;
+  --hl6: #C39BD3;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+/* ─── HEADER ─────────────────────────────────────────── */
+.hdr {
+  background: var(--ink);
+  padding: 1.8rem 2.5rem 1.4rem;
+  position: relative;
+}
+.hdr::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0; width: 9px;
+  background: var(--gold);
+}
+.hdr-kicker {
+  font-size: 11px; letter-spacing: 4px; color: var(--lav);
+  text-transform: uppercase; margin-bottom: 0.35rem;
+}
+.hdr h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem; color: white; line-height: 1.1;
+}
+.hdr h1 em { color: var(--gold); font-style: normal; }
+.hdr-sub { font-size: 13px; color: var(--lav); margin-top: 0.3rem; }
+
+/* name strip */
+.name-bar {
+  background: white;
+  display: flex; gap: 0; border-bottom: 2px solid var(--border);
+}
+.name-field {
+  flex: 1; padding: 0.6rem 1.5rem;
+  border-right: 1px solid var(--border);
+  font-size: 13px;
+}
+.name-field:last-child { border-right: none; }
+.name-field label { font-weight: 700; display: block; margin-bottom: 2px; color: #555; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+.name-field .line { border-bottom: 1px solid #bbb; min-height: 22px; }
+
+/* ─── PAGE WRAPPER ───────────────────────────────────── */
+.page { max-width: 980px; margin: 0 auto; padding: 0 1.5rem 3rem; }
+
+/* ─── SECTION HEADING ────────────────────────────────── */
+.sec-head {
+  display: flex; align-items: center; gap: 0.75rem;
+  margin: 2rem 0 0.5rem;
+}
+.sec-badge {
+  background: var(--ink); color: var(--gold);
+  font-size: 10px; font-weight: 700; letter-spacing: 3px;
+  text-transform: uppercase; padding: 4px 10px; border-radius: 3px;
+  white-space: nowrap;
+}
+.sec-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.35rem; color: var(--ink);
+}
+.sec-sub {
+  font-size: 13px; color: #666; margin-bottom: 1.25rem;
+}
+
+/* ─── PART 1: DEVICE CARDS ───────────────────────────── */
+.device-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+@media (max-width: 620px) { .device-grid { grid-template-columns: 1fr; } }
+
+.dcard {
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.dcard-top {
+  display: flex; align-items: center; gap: 0.6rem;
+  padding: 0.55rem 1rem;
+}
+.swatch { width: 13px; height: 13px; border-radius: 3px; flex-shrink: 0; }
+.dcard-num { margin-left: auto; font-size: 11px; font-weight: 700; color: #aaa; }
+.dcard-name { font-weight: 700; font-size: 15px; }
+.dcard-body { padding: 0 1rem 0.85rem; }
+.dcard-def { font-size: 13px; color: #555; font-style: italic; margin-bottom: 0.45rem; }
+.dcard-ex {
+  font-size: 13px; border-radius: 4px; padding: 0.35rem 0.6rem;
+  border-left: 3px solid; background: var(--bg);
+  margin-bottom: 0.55rem; font-family: 'Playfair Display', serif; font-style: italic;
+}
+.write-label { font-size: 11px; font-weight: 600; color: #999; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.2rem; }
+.wline { border-bottom: 1px solid #ddd; min-height: 22px; margin-bottom: 6px; }
+
+/* ─── COLOUR KEY ─────────────────────────────────────── */
+.colour-key {
+  background: white; border: 1.5px solid var(--border); border-radius: 8px;
+  padding: 0.9rem 1.2rem; margin-bottom: 1.25rem;
+}
+.colour-key h3 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--ink); margin-bottom: 0.6rem; }
+.chips { display: flex; flex-wrap: wrap; gap: 0.6rem 1.2rem; }
+.chip { display: flex; align-items: center; gap: 0.4rem; font-size: 13px; }
+.chip-box { width: 18px; height: 18px; border-radius: 3px; border: 1px solid rgba(0,0,0,.1); flex-shrink: 0; }
+
+/* ─── DIGITAL CONTROLS ───────────────────────────────── */
+.dig-controls { margin-bottom: 0.85rem; }
+.dig-controls p { font-size: 12px; font-weight: 600; color: #666; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.45rem; }
+.btn-row { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+.hl-btn {
+  padding: 4px 12px; border-radius: 20px; border: 2px solid transparent;
+  font-size: 12px; font-weight: 700; cursor: pointer; transition: all .15s;
+  font-family: 'DM Sans', sans-serif;
+}
+.hl-btn.active { border-color: var(--ink); transform: scale(1.06); }
+
+/* ─── SONG BLOCKS ────────────────────────────────────── */
+.song-block {
+  background: white; border: 1.5px solid var(--border);
+  border-radius: 8px; overflow: hidden; margin-bottom: 1rem;
+}
+.song-hdr {
+  background: var(--ink); color: white;
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.55rem 1rem;
+}
+.song-hdr .title { font-weight: 700; font-size: 14px; }
+.song-hdr .artist { font-size: 12px; color: var(--lav); }
+.song-body { padding: 1rem 1.2rem; }
+.lyric {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: 15px; line-height: 2.1; display: block;
+}
+.lyric .w { cursor: pointer; border-radius: 3px; padding: 0 2px; transition: background .12s; }
+.song-q {
+  margin-top: 0.85rem; padding-top: 0.75rem; border-top: 1px dashed #ddd;
+  font-size: 13px; font-weight: 600; color: #555; margin-bottom: 0.35rem;
+}
+.song-wline { border-bottom: 1px solid #ddd; min-height: 22px; margin-bottom: 6px; }
+
+/* ─── PART 2B: BRAINSTORM PRACTICE ──────────────────── */
+.bsection {
+  background: white; border: 1.5px solid var(--border);
+  border-radius: 8px; margin-bottom: 1rem; overflow: hidden;
+}
+.bsection-hdr {
+  padding: 0.6rem 1.1rem;
+  display: flex; align-items: center; gap: 0.75rem;
+}
+.b-tag {
+  font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 3px;
+}
+.bsection-hdr h3 { font-family: 'Playfair Display', serif; font-size: 1.05rem; }
+.bex-box {
+  margin: 0 1.1rem 0.75rem; padding: 0.6rem 0.85rem;
+  background: var(--bg); border-radius: 5px; border-left: 3px solid;
+}
+.bex-label { font-size: 10px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.2rem; }
+.bex-from { font-size: 13px; font-style: italic; color: #666; margin-bottom: 0.15rem; font-family: 'Playfair Display', serif; }
+.bex-to { font-size: 13px; font-style: italic; font-family: 'Playfair Display', serif; color: var(--ink); }
+.btry-list { padding: 0 1.1rem 1rem; }
+.btry {
+  background: var(--bg); border-radius: 5px; border-left: 3px solid var(--border);
+  padding: 0.5rem 0.8rem; margin-bottom: 0.6rem;
+}
+.btry-q { font-size: 14px; font-style: italic; font-family: 'Playfair Display', serif; color: var(--ink); margin-bottom: 0.3rem; }
+.btry-hint { font-size: 11px; color: #888; margin-bottom: 0.35rem; }
+.btry-wline { border-bottom: 1px solid #ccc; min-height: 20px; }
+
+/* ─── PART 3: BORING POEM REWRITE ───────────────────── */
+.poem-grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem;
+}
+@media (max-width: 640px) { .poem-grid { grid-template-columns: 1fr; } }
+
+.poem-col {
+  background: white; border: 1.5px solid var(--border);
+  border-radius: 8px; overflow: hidden;
+}
+.poem-col-hdr {
+  padding: 0.55rem 1rem; font-size: 11px; font-weight: 700;
+  letter-spacing: 3px; text-transform: uppercase;
+}
+.poem-body { padding: 0.75rem 1rem 1rem; }
+.stanza-label { font-size: 11px; font-weight: 700; color: var(--gold); margin: 0.5rem 0 0.2rem; letter-spacing: 1px; }
+.stanza-label:first-child { margin-top: 0; }
+.poem-line {
+  font-family: 'Playfair Display', serif; font-style: italic;
+  font-size: 14px; line-height: 1.8; color: var(--ink); display: block;
+}
+.rewrite-line { border-bottom: 1px solid #ddd; min-height: 28px; margin-bottom: 4px; }
+
+/* ─── EXTENSION ──────────────────────────────────────── */
+.ext-box {
+  background: var(--ink); border-radius: 10px; overflow: hidden; margin-top: 2.5rem;
+}
+.ext-hdr {
+  background: var(--gold); display: flex; align-items: center; gap: 0.75rem;
+  padding: 0.7rem 1.2rem;
+}
+.ext-hdr .star { font-size: 1.3rem; }
+.ext-hdr strong { font-size: 15px; font-weight: 700; color: var(--ink); }
+.ext-hdr small { font-size: 12px; color: rgba(0,0,0,.55); }
+.ext-grid { display: grid; grid-template-columns: 1fr 1fr; }
+@media (max-width: 600px) { .ext-grid { grid-template-columns: 1fr; } }
+.ext-card {
+  padding: 0.85rem 1.1rem;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  border-right: 1px solid rgba(255,255,255,.08);
+}
+.ext-card:nth-child(even) { border-right: none; }
+.ext-name { font-weight: 700; color: var(--gold); font-size: 14px; margin-bottom: 0.2rem; }
+.ext-def { font-size: 12.5px; color: var(--lav); line-height: 1.45; margin-bottom: 0.3rem; }
+.ext-ex { font-size: 12px; color: #eee; font-style: italic; margin-bottom: 0.4rem; }
+.ext-wlabel { font-size: 10px; color: rgba(255,255,255,.4); text-transform: uppercase; letter-spacing: 1px; margin-top: 0.3rem; }
+.ext-wline { border-bottom: 1px solid rgba(255,255,255,.2); min-height: 20px; margin-top: 3px; }
+
+/* ─── FOOTER ─────────────────────────────────────────── */
+footer {
+  text-align: center; font-size: 12px; color: #aaa;
+  padding: 1.5rem; border-top: 1px solid var(--border); margin-top: 2.5rem;
+}
+
+/* ─── PRINT ──────────────────────────────────────────── */
+@media print {
+  body { background: white; font-size: 13px; }
+  .hdr { background: white; border-bottom: 3px solid var(--ink); }
+  .hdr h1, .hdr h1 em { color: var(--ink) !important; }
+  .hdr-kicker, .hdr-sub, .song-hdr .artist { color: #555 !important; }
+  .song-hdr { background: #333; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .ext-box { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .dig-controls { display: none; }
+  .hl-btn { display: none; }
+  .bsection, .dcard, .song-block, .poem-col { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<!-- ═══ HEADER ═══════════════════════════════════════════════ -->
+<div class="hdr">
+  <div class="hdr-kicker">HUMN 110 · Arts & Culture · Lesson 11</div>
+  <h1>Linguistic <em>Devices</em></h1>
+  <div class="hdr-sub">Writing as Art — Student Worksheet</div>
+</div>
+
+<div class="name-bar">
+  <div class="name-field">
+    <label>Name</label>
+    <div class="line"></div>
+  </div>
+  <div class="name-field">
+    <label>Date</label>
+    <div class="line"></div>
+  </div>
+  <div class="name-field">
+    <label>Group</label>
+    <div class="line"></div>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ═══ PART 1: THE SIX DEVICES ══════════════════════════════ -->
+<div class="sec-head">
+  <span class="sec-badge">Part 1</span>
+  <span class="sec-title">The Six Devices</span>
+</div>
+<p class="sec-sub">Read the definition. Study the example. Write your own in the space below each one.</p>
+
+<div class="device-grid">
+
+  <!-- 1 ALLITERATION -->
+  <div class="dcard">
+    <div class="dcard-top" style="background:#FFF9E6;">
+      <div class="swatch" style="background:var(--hl1);"></div>
+      <span class="dcard-name">Alliteration</span>
+      <span class="dcard-num">01</span>
+    </div>
+    <div class="dcard-body">
+      <p class="dcard-def">The same consonant sound repeated at the start of nearby words.</p>
+      <div class="dcard-ex" style="border-color:var(--hl1);">
+        <span style="background:var(--hl1);border-radius:2px;padding:0 2px;">S</span>ilently,
+        <span style="background:var(--hl1);border-radius:2px;padding:0 2px;">s</span>oftly,
+        <span style="background:var(--hl1);border-radius:2px;padding:0 2px;">s</span>hadows
+        <span style="background:var(--hl1);border-radius:2px;padding:0 2px;">s</span>peak.
+      </div>
+      <p class="write-label">Your example:</p>
+      <div class="wline"></div>
+      <div class="wline"></div>
+    </div>
+  </div>
+
+  <!-- 2 RHYME -->
+  <div class="dcard">
+    <div class="dcard-top" style="background:#FFF0F0;">
+      <div class="swatch" style="background:var(--hl2);"></div>
+      <span class="dcard-name">Rhyme</span>
+      <span class="dcard-num">02</span>
+    </div>
+    <div class="dcard-body">
+      <p class="dcard-def">Words with matching end sounds, usually at the end of lines.</p>
+      <div class="dcard-ex" style="border-color:var(--hl2);">
+        Burning <span style="background:var(--hl2);border-radius:2px;padding:0 2px;">bright</span>
+        / in the dead of <span style="background:var(--hl2);border-radius:2px;padding:0 2px;">night</span>
+      </div>
+      <p class="write-label">Your example (find a word that rhymes with SKY):</p>
+      <div class="wline"></div>
+      <p class="dcard-def" style="margin-top:0.2rem;">The sun rose high, up into the <span style="border-bottom:2px solid var(--hl2);padding:0 2rem;"></span></p>
+    </div>
+  </div>
+
+  <!-- 3 RHYTHM -->
+  <div class="dcard">
+    <div class="dcard-top" style="background:#EEFBF3;">
+      <div class="swatch" style="background:var(--hl3);"></div>
+      <span class="dcard-name">Rhythm</span>
+      <span class="dcard-num">03</span>
+    </div>
+    <div class="dcard-body">
+      <p class="dcard-def">A pattern of stressed and unstressed syllables — the beat under the words.</p>
+      <div class="dcard-ex" style="border-color:var(--hl3);">
+        <strong>DA</strong>-da-<strong>DA</strong>-da — I <strong>HAVE</strong> a <strong>DREAM</strong> that <strong>ONE</strong> day...
+      </div>
+      <p class="write-label">Tap the beat as you read these aloud. Which has a stronger rhythm?</p>
+      <div class="wline"></div>
+      <div class="wline"></div>
+    </div>
+  </div>
+
+  <!-- 4 REPETITION -->
+  <div class="dcard">
+    <div class="dcard-top" style="background:#EEF6FF;">
+      <div class="swatch" style="background:var(--hl4);"></div>
+      <span class="dcard-name">Repetition</span>
+      <span class="dcard-num">04</span>
+    </div>
+    <div class="dcard-body">
+      <p class="dcard-def">Repeating a word or phrase deliberately for emphasis or emotional effect.</p>
+      <div class="dcard-ex" style="border-color:var(--hl4);">
+        <span style="background:var(--hl4);border-radius:2px;padding:0 2px;">We don't need</span> no education.
+        <span style="background:var(--hl4);border-radius:2px;padding:0 2px;">We don't need</span> no thought control.
+      </div>
+      <p class="write-label">Your example (repeat a word or short phrase):</p>
+      <div class="wline"></div>
+      <div class="wline"></div>
+    </div>
+  </div>
+
+  <!-- 5 SIMILE -->
+  <div class="dcard">
+    <div class="dcard-top" style="background:#FEF0F8;">
+      <div class="swatch" style="background:var(--hl5);"></div>
+      <span class="dcard-name">Simile</span>
+      <span class="dcard-num">05</span>
+    </div>
+    <div class="dcard-body">
+      <p class="dcard-def">A comparison using <em>like</em> or <em>as</em> — linking two different things.</p>
+      <div class="dcard-ex" style="border-color:var(--hl5);">
+        The city was loud <span style="background:var(--hl5);border-radius:2px;padding:0 2px;">like a festival</span> that never stopped.
+      </div>
+      <p class="write-label">Complete: She was tired as a <span style="border-bottom:1px solid #ccc;padding:0 4rem;"></span></p>
+      <div class="wline"></div>
+    </div>
+  </div>
+
+  <!-- 6 METAPHOR + IMAGERY -->
+  <div class="dcard">
+    <div class="dcard-top" style="background:#F5F0FF;">
+      <div class="swatch" style="background:var(--hl6);"></div>
+      <span class="dcard-name">Metaphor &amp; Imagery</span>
+      <span class="dcard-num">06</span>
+    </div>
+    <div class="dcard-body">
+      <p class="dcard-def"><strong>Metaphor:</strong> say it IS something else (no like/as). <strong>Imagery:</strong> language that creates a vivid picture or sensation.</p>
+      <div class="dcard-ex" style="border-color:var(--hl6);">
+        He raised the <span style="background:var(--hl6);border-radius:2px;padding:0 2px;">golden vessel</span> to his lips, the steam <span style="background:var(--hl6);border-radius:2px;padding:0 2px;">wafting to his glasses</span>, making the world cloud up like a dream state.
+      </div>
+      <p class="write-label">Your example (say something IS something — no like/as):</p>
+      <div class="wline"></div>
+      <div class="wline"></div>
+    </div>
+  </div>
+
+</div><!-- /device-grid -->
+
+
+<!-- ═══ PART 2: COLOUR THE DEVICES ═══════════════════════════ -->
+<div class="sec-head" style="margin-top:2.5rem;">
+  <span class="sec-badge">Part 2</span>
+  <span class="sec-title">Colour the Devices</span>
+</div>
+<p class="sec-sub">Highlight or underline each device you find. Use the colour key. Some lines have more than one.</p>
+
+<div class="colour-key">
+  <h3>Colour Key</h3>
+  <div class="chips">
+    <div class="chip"><div class="chip-box" style="background:var(--hl1);"></div>Alliteration</div>
+    <div class="chip"><div class="chip-box" style="background:var(--hl2);"></div>Rhyme</div>
+    <div class="chip"><div class="chip-box" style="background:var(--hl3);"></div>Rhythm</div>
+    <div class="chip"><div class="chip-box" style="background:var(--hl4);"></div>Repetition</div>
+    <div class="chip"><div class="chip-box" style="background:var(--hl5);"></div>Simile</div>
+    <div class="chip"><div class="chip-box" style="background:var(--hl6);"></div>Metaphor / Imagery</div>
+  </div>
+</div>
+
+<!-- Digital mode controls -->
+<div class="dig-controls" id="dig-controls">
+  <p>Digital: pick a device then click any word to highlight it</p>
+  <div class="btn-row" id="btn-row">
+    <button class="hl-btn active" data-col="#FFD966" style="background:#FFD966;color:#1A1035;">Alliteration</button>
+    <button class="hl-btn" data-col="#FF9999" style="background:#FF9999;color:#1A1035;">Rhyme</button>
+    <button class="hl-btn" data-col="#82E0AA" style="background:#82E0AA;color:#1A1035;">Rhythm</button>
+    <button class="hl-btn" data-col="#85C1E9" style="background:#85C1E9;color:#1A1035;">Repetition</button>
+    <button class="hl-btn" data-col="#F0A8D0" style="background:#F0A8D0;color:#1A1035;">Simile</button>
+    <button class="hl-btn" data-col="#C39BD3" style="background:#C39BD3;color:#fff;">Metaphor/Imagery</button>
+    <button class="hl-btn" data-col="erase" style="background:#eee;color:#666;">&#x2715; Erase</button>
+  </div>
+</div>
+
+<!-- SONG 1 -->
+<div class="song-block">
+  <div class="song-hdr">
+    <span class="title">The Sound of Silence</span>
+    <span class="artist">Simon &amp; Garfunkel, 1964</span>
+  </div>
+  <div class="song-body">
+    <span class="lyric" data-hl>Hello darkness, my old friend,</span>
+    <span class="lyric" data-hl>I've come to talk with you again,</span>
+    <span class="lyric" data-hl>Because a vision softly creeping,</span>
+    <span class="lyric" data-hl>Left its seeds while I was sleeping,</span>
+    <span class="lyric" data-hl>And the vision that was planted in my brain</span>
+    <span class="lyric" data-hl>Still remains</span>
+    <span class="lyric" data-hl>Within the sound of silence.</span>
+    <p class="song-q">Find at least 3 devices. Name them here:</p>
+    <div class="song-wline"></div>
+    <div class="song-wline"></div>
+  </div>
+</div>
+
+<!-- SONG 2 -->
+<div class="song-block">
+  <div class="song-hdr">
+    <span class="title">In the Summertime</span>
+    <span class="artist">Mungo Jerry, 1970</span>
+  </div>
+  <div class="song-body">
+    <span class="lyric" data-hl>In the summertime when the weather is high,</span>
+    <span class="lyric" data-hl>You can stretch right up and touch the sky,</span>
+    <span class="lyric" data-hl>When the weather's fine you got women, you got women on your mind,</span>
+    <span class="lyric" data-hl>Have a drink, have a drive, go out and see what you can find.</span>
+    <span class="lyric" data-hl>If her daddy's rich, take her out for a meal,</span>
+    <span class="lyric" data-hl>If her daddy's poor, just do what you feel.</span>
+    <p class="song-q">Where does the rhyme happen? Is the rhythm regular or irregular?</p>
+    <div class="song-wline"></div>
+    <div class="song-wline"></div>
+  </div>
+</div>
+
+<!-- SONG 3 -->
+<div class="song-block">
+  <div class="song-hdr">
+    <span class="title">Hi Ren (spoken word excerpt)</span>
+    <span class="artist">Ren, 2022</span>
+  </div>
+  <div class="song-body">
+    <span class="lyric" data-hl>I've been fighting all my life,</span>
+    <span class="lyric" data-hl>I've been fighting all my life.</span>
+    <span class="lyric" data-hl>My mind is a battlefield, a warzone, a knife,</span>
+    <span class="lyric" data-hl>A weapon unsheathed and a scar from the strife.</span>
+    <span class="lyric" data-hl>So come on then, let's go — show me what you've got,</span>
+    <span class="lyric" data-hl>Because my soul is a soldier and it cannot be bought.</span>
+    <p class="song-q">Challenge: find 5 devices. Name them all:</p>
+    <div class="song-wline"></div>
+    <div class="song-wline"></div>
+    <div class="song-wline"></div>
+  </div>
+</div>
+
+
+<!-- ═══ PART 2B: CLASS BRAINSTORM PRACTICE ════════════════════ -->
+<div class="sec-head" style="margin-top:2.5rem;">
+  <span class="sec-badge">Part 2B</span>
+  <span class="sec-title">Class Brainstorm Practice</span>
+</div>
+<p class="sec-sub">These are the same sentences from the class Slido activity. Write your improved versions below.</p>
+
+<!-- RHYME -->
+<div class="bsection">
+  <div class="bsection-hdr" style="background:#FFF9E6;">
+    <span class="b-tag" style="background:var(--hl2);color:var(--ink);">Rhyme</span>
+    <h3>Complete the rhyme</h3>
+  </div>
+  <div class="bex-box" style="border-color:var(--hl2);margin:0.75rem 1.1rem;">
+    <div class="bex-label" style="color:#b06060;">Example</div>
+    <div class="bex-from">"The sun rose high, up into the ___"</div>
+    <div class="bex-to">= sky / eye / goodbye / crimson dye</div>
+  </div>
+  <div class="btry-list">
+    <div class="btry" style="border-color:var(--hl2);">
+      <div class="btry-q">"The rain came down, it fell all ___"</div>
+      <div class="btry-wline"></div>
+    </div>
+    <div class="btry" style="border-color:var(--hl2);">
+      <div class="btry-q">"She smiled and turned and walked ___"</div>
+      <div class="btry-wline"></div>
+    </div>
+    <div class="btry" style="border-color:var(--hl2);">
+      <div class="btry-q">"The city sleeps but never ___"</div>
+      <div class="btry-wline"></div>
+    </div>
+  </div>
+</div>
+
+<!-- METAPHOR / SIMILE -->
+<div class="bsection">
+  <div class="bsection-hdr" style="background:#FEF0F8;">
+    <span class="b-tag" style="background:var(--hl5);color:var(--ink);">Metaphor / Simile</span>
+    <h3>Compare it. Transform it.</h3>
+  </div>
+  <div class="bex-box" style="border-color:var(--hl5);margin:0.75rem 1.1rem;">
+    <div class="bex-label" style="color:#b060a0;">Example</div>
+    <div class="bex-from">"The sun rose"</div>
+    <div class="bex-to">= The sun clawed its way over the mountains like a slow burning eye.</div>
+  </div>
+  <div class="btry-list">
+    <div class="btry" style="border-color:var(--hl5);">
+      <div class="btry-q">"The city was loud"</div>
+      <div class="btry-hint">Use a SIMILE — like / as</div>
+      <div class="btry-wline"></div>
+    </div>
+    <div class="btry" style="border-color:var(--hl5);">
+      <div class="btry-q">"She was tired"</div>
+      <div class="btry-hint">Use a METAPHOR — say it IS something</div>
+      <div class="btry-wline"></div>
+    </div>
+    <div class="btry" style="border-color:var(--hl5);">
+      <div class="btry-q">"The rain fell hard"</div>
+      <div class="btry-hint">Your choice — simile or metaphor</div>
+      <div class="btry-wline"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ALLITERATION -->
+<div class="bsection">
+  <div class="bsection-hdr" style="background:#FFF9E6;">
+    <span class="b-tag" style="background:var(--hl1);color:var(--ink);">Alliteration</span>
+    <h3>Every word pulls its weight</h3>
+  </div>
+  <div class="bex-box" style="border-color:var(--hl1);margin:0.75rem 1.1rem;">
+    <div class="bex-label" style="color:#a08020;">Example</div>
+    <div class="bex-from">"He walked to the shop"</div>
+    <div class="bex-to">= He bounced brazenly around for the big beautiful bargain bin to buy a bounty.</div>
+  </div>
+  <div class="btry-list">
+    <div class="btry" style="border-color:var(--hl1);">
+      <div class="btry-q">"She ran to catch the bus"</div>
+      <div class="btry-hint">Rewrite so as many words as possible share the same starting sound</div>
+      <div class="btry-wline"></div>
+      <div class="btry-wline"></div>
+    </div>
+    <div class="btry" style="border-color:var(--hl1);">
+      <div class="btry-q">"The dog slept in the sun"</div>
+      <div class="btry-hint">Any letter — keep the meaning, change the words</div>
+      <div class="btry-wline"></div>
+      <div class="btry-wline"></div>
+    </div>
+  </div>
+</div>
+
+<!-- IMAGERY -->
+<div class="bsection">
+  <div class="bsection-hdr" style="background:#F5F0FF;">
+    <span class="b-tag" style="background:var(--hl6);color:#fff;">Imagery</span>
+    <h3>Make them feel it, smell it, taste it</h3>
+  </div>
+  <div class="bex-box" style="border-color:var(--hl6);margin:0.75rem 1.1rem;">
+    <div class="bex-label" style="color:#7a5a9a;">Example</div>
+    <div class="bex-from">"He drank hot tea"</div>
+    <div class="bex-to">= He raised the golden vessel to his lips, the steam wafting to his glasses, making the world cloud up like a dream state, the soft silky liquid cartwheeling down his throat — and with a great big gulp: ah. Satisfaction was his.</div>
+  </div>
+  <div class="btry-list">
+    <div class="btry" style="border-color:var(--hl6);">
+      <div class="btry-q">"She ate rice."</div>
+      <div class="btry-hint">Expand into 2–4 lines. Use all 5 senses: sight, sound, smell, taste, touch.</div>
+      <div class="btry-wline"></div>
+      <div class="btry-wline"></div>
+      <div class="btry-wline"></div>
+      <div class="btry-wline"></div>
+    </div>
+    <div class="btry" style="border-color:var(--hl6);">
+      <div class="btry-q">"He heard music from outside."</div>
+      <div class="btry-hint">Expand — what does it smell like? Feel like? What colour is it?</div>
+      <div class="btry-wline"></div>
+      <div class="btry-wline"></div>
+      <div class="btry-wline"></div>
+      <div class="btry-wline"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══ PART 3: REWRITE THE POEM ═════════════════════════════ -->
+<div class="sec-head" style="margin-top:2.5rem;">
+  <span class="sec-badge">Part 3</span>
+  <span class="sec-title">Rewrite the Poem</span>
+</div>
+<p class="sec-sub">These are the same lines from the class brainstorm — but now all together. Use your best improved versions from above to rewrite this boring poem. Keep the structure. Make it feel something.</p>
+
+<div class="poem-grid">
+
+  <!-- BORING ORIGINAL -->
+  <div class="poem-col">
+    <div class="poem-col-hdr" style="background:var(--ink);color:var(--gold);">The Boring Version</div>
+    <div class="poem-body">
+      <div class="stanza-label">[Stanza 1]</div>
+      <span class="poem-line">The sun rose high, up into the sky.</span>
+      <span class="poem-line">The rain came down, it fell all night.</span>
+      <span class="poem-line">She ate rice. It was okay.</span>
+      <span class="poem-line">The city was loud. She was tired.</span>
+
+      <div class="stanza-label">[Stanza 2]</div>
+      <span class="poem-line">She ran to catch the bus.</span>
+      <span class="poem-line">He walked to the shop.</span>
+      <span class="poem-line">The dog slept in the sun.</span>
+      <span class="poem-line">He heard music from outside.</span>
+
+      <div class="stanza-label">[Ending]</div>
+      <span class="poem-line">OK. Goodbye.</span>
+    </div>
+  </div>
+
+  <!-- REWRITE COLUMN -->
+  <div class="poem-col">
+    <div class="poem-col-hdr" style="background:var(--coral);color:white;">Your Improved Version</div>
+    <div class="poem-body">
+      <div class="stanza-label">[Stanza 1]</div>
+      <div class="rewrite-line"></div>
+      <div class="rewrite-line"></div>
+      <div class="rewrite-line"></div>
+      <div class="rewrite-line"></div>
+
+      <div class="stanza-label">[Stanza 2]</div>
+      <div class="rewrite-line"></div>
+      <div class="rewrite-line"></div>
+      <div class="rewrite-line"></div>
+      <div class="rewrite-line"></div>
+
+      <div class="stanza-label">[Ending — make it memorable]</div>
+      <div class="rewrite-line"></div>
+      <div class="rewrite-line"></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Devices used -->
+<div style="background:white;border:1.5px solid var(--border);border-radius:8px;padding:1rem 1.25rem;margin-top:1rem;">
+  <p style="font-size:13px;font-weight:700;color:var(--ink);margin-bottom:0.5rem;">Devices I used in my rewrite (name them + mark which line):</p>
+  <div class="song-wline"></div>
+  <div class="song-wline"></div>
+  <div class="song-wline"></div>
+</div>
+
+
+<!-- ═══ EXTENSION ════════════════════════════════════════════ -->
+<div class="ext-box">
+  <div class="ext-hdr">
+    <span class="star">★</span>
+    <div>
+      <strong>Extension — 8 Advanced Devices</strong>
+      <br><small>Optional. For early finishers or students who want to go further.</small>
+    </div>
+  </div>
+  <div class="ext-grid">
+
+    <div class="ext-card">
+      <div class="ext-name">Assonance</div>
+      <div class="ext-def">Repetition of vowel sounds in nearby words, not just at the start.</div>
+      <div class="ext-ex">"The rain in Spain stays mainly in the plain."</div>
+      <div class="ext-wlabel">Find an example in the songs above:</div>
+      <div class="ext-wline"></div>
+    </div>
+
+    <div class="ext-card">
+      <div class="ext-name">Consonance</div>
+      <div class="ext-def">Repetition of consonant sounds anywhere within words.</div>
+      <div class="ext-ex">"The lumpy, bumpy camel humped along."</div>
+      <div class="ext-wlabel">Write your own:</div>
+      <div class="ext-wline"></div>
+    </div>
+
+    <div class="ext-card">
+      <div class="ext-name">Onomatopoeia</div>
+      <div class="ext-def">A word that sounds like what it describes.</div>
+      <div class="ext-ex">"The bees buzzed. The leaves rustled."</div>
+      <div class="ext-wlabel">Write 3 onomatopoeia words:</div>
+      <div class="ext-wline"></div>
+    </div>
+
+    <div class="ext-card">
+      <div class="ext-name">Personification</div>
+      <div class="ext-def">Giving human qualities or actions to non-human things.</div>
+      <div class="ext-ex">"The wind whispered secrets through the trees."</div>
+      <div class="ext-wlabel">Your example using your city or nature:</div>
+      <div class="ext-wline"></div>
+    </div>
+
+    <div class="ext-card">
+      <div class="ext-name">Hyperbole</div>
+      <div class="ext-def">Extreme exaggeration used for effect — not meant literally.</div>
+      <div class="ext-ex">"I've told you a million times."</div>
+      <div class="ext-wlabel">Write a hyperbole about your week:</div>
+      <div class="ext-wline"></div>
+    </div>
+
+    <div class="ext-card">
+      <div class="ext-name">Oxymoron</div>
+      <div class="ext-def">Two contradictory words placed together to create meaning.</div>
+      <div class="ext-ex">"Deafening silence." / "Living death."</div>
+      <div class="ext-wlabel">Create your own oxymoron:</div>
+      <div class="ext-wline"></div>
+    </div>
+
+    <div class="ext-card">
+      <div class="ext-name">Enjambment</div>
+      <div class="ext-def">A sentence that continues past the end of a line without a pause — builds momentum.</div>
+      <div class="ext-ex">"I have eaten / the plums / that were in / the icebox"</div>
+      <div class="ext-wlabel">Why does this create tension?</div>
+      <div class="ext-wline"></div>
+    </div>
+
+    <div class="ext-card">
+      <div class="ext-name">Caesura</div>
+      <div class="ext-def">A deliberate pause mid-line, often shown by punctuation.</div>
+      <div class="ext-ex">"To be, ‖ or not to be, that is the question."</div>
+      <div class="ext-wlabel">Find a caesura in the Sound of Silence extract:</div>
+      <div class="ext-wline"></div>
+    </div>
+
+  </div>
+</div>
+
+</div><!-- /page -->
+
+<footer>HUMN 110 Arts &amp; Culture &nbsp;·&nbsp; Lesson 11: Writing as Art &nbsp;·&nbsp; 9 June 2026</footer>
+
+<script>
+// ── Highlighting engine ──────────────────────────────────
+let activeCol = '#FFD966';
+
+document.querySelectorAll('.hl-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.hl-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeCol = btn.dataset.col;
+  });
+});
+
+// Wrap words in each lyric line
+document.querySelectorAll('.lyric[data-hl]').forEach(line => {
+  const raw = line.textContent;
+  line.innerHTML = raw.split(/(\s+)/).map(token =>
+    token.trim()
+      ? `<span class="w">${token}</span>`
+      : token
+  ).join('');
+  line.querySelectorAll('.w').forEach(w => {
+    w.addEventListener('click', () => {
+      if (activeCol === 'erase') {
+        w.style.background = '';
+        w.style.borderRadius = '';
+      } else {
+        w.style.background = activeCol;
+        w.style.borderRadius = '3px';
+      }
+    });
+  });
+});
+</script>
+
+</body>
+</html>
