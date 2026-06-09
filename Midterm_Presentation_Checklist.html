@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Midterm Presentation Checklist — HUMN 110</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+
+:root {
+  --ink:    #1A1035;
+  --bg:     #F7F4FF;
+  --white:  #FFFFFF;
+  --border: #DDD6F5;
+  --gold:   #F5C842;
+  --coral:  #FF6B6B;
+  --teal:   #3ECFCF;
+  --lav:    #C9B8FF;
+  --green:  #82E0AA;
+  --amber:  #F5A623;
+  --purple: #7F77DD;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+.hdr {
+  background: var(--ink);
+  padding: 1.6rem 1.5rem 1.2rem;
+  position: relative;
+}
+.hdr::before {
+  content: ''; position: absolute;
+  left: 0; top: 0; bottom: 0; width: 8px;
+  background: var(--gold);
+}
+.hdr-kicker { font-size: 11px; letter-spacing: 3px; color: var(--lav); text-transform: uppercase; margin-bottom: 0.3rem; }
+.hdr h1 { font-family: 'Playfair Display', serif; font-size: 1.6rem; color: white; line-height: 1.15; }
+.hdr h1 em { color: var(--gold); font-style: normal; }
+.hdr p { font-size: 13px; color: var(--lav); margin-top: 0.3rem; }
+
+/* ── PROGRESS BAR ── */
+.progress-wrap { background: rgba(255,255,255,0.1); height: 4px; margin-top: 1rem; border-radius: 2px; }
+.progress-bar { background: var(--gold); height: 4px; border-radius: 2px; width: 0%; transition: width 0.4s ease; }
+
+/* ── PAGE ── */
+.page { max-width: 680px; margin: 0 auto; padding: 1.25rem 1rem 3rem; }
+
+/* ── INTRO NOTE ── */
+.intro {
+  background: white; border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 0.9rem 1.1rem; margin-bottom: 1.5rem;
+  font-size: 14px; color: #555;
+}
+.intro strong { color: var(--ink); }
+
+/* ── STEP CARDS ── */
+.step-card {
+  background: white;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 0.9rem;
+  overflow: hidden;
+  transition: box-shadow 0.2s;
+}
+.step-card.done { border-color: var(--green); }
+
+.step-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  user-select: none;
+}
+.step-num {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; font-weight: 700;
+  flex-shrink: 0;
+  transition: background 0.2s, color 0.2s;
+}
+.step-title { font-weight: 700; font-size: 15px; flex: 1; }
+.step-wallas {
+  font-size: 11px; font-weight: 600; letter-spacing: 1px;
+  text-transform: uppercase; padding: 2px 8px;
+  border-radius: 20px; white-space: nowrap;
+}
+.chevron {
+  font-size: 14px; color: #aaa;
+  transition: transform 0.25s;
+  flex-shrink: 0;
+}
+.step-card.open .chevron { transform: rotate(180deg); }
+
+.step-body {
+  display: none;
+  padding: 0 1rem 1rem;
+  border-top: 1px solid var(--border);
+}
+.step-card.open .step-body { display: block; }
+
+/* checklist items */
+.checklist { list-style: none; margin: 0.65rem 0 0; }
+.checklist li {
+  display: flex; align-items: flex-start; gap: 0.6rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid #f0eeff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: opacity 0.15s;
+}
+.checklist li:last-child { border-bottom: none; }
+.checklist li.ticked { opacity: 0.5; text-decoration: line-through; color: #888; }
+.chk {
+  width: 20px; height: 20px; border-radius: 4px;
+  border: 2px solid var(--border); flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 1px; transition: background 0.15s, border-color 0.15s;
+  font-size: 12px; color: transparent;
+}
+.checklist li.ticked .chk { color: white; border-color: var(--green); background: var(--green); }
+
+/* tip box */
+.tip {
+  background: var(--bg); border-radius: 6px;
+  padding: 0.5rem 0.75rem; margin-top: 0.75rem;
+  font-size: 13px; color: #666; border-left: 3px solid;
+}
+.tip em { font-style: normal; font-weight: 600; color: var(--ink); }
+
+/* question prompt */
+.prompt-q {
+  display: inline-block; font-style: italic;
+  font-family: 'Playfair Display', serif;
+  font-size: 14px; color: var(--ink);
+  background: var(--bg); border-radius: 6px;
+  padding: 0.45rem 0.75rem; margin-top: 0.75rem;
+  border-left: 3px solid;
+}
+
+/* ── BONUS CARD ── */
+.bonus-tag {
+  background: var(--amber); color: white;
+  font-size: 11px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; padding: 2px 8px; border-radius: 20px;
+}
+
+/* ── DONE STATE ── */
+.done-banner {
+  display: none;
+  background: var(--green); color: white;
+  text-align: center; padding: 0.6rem; font-weight: 700; font-size: 14px;
+}
+.step-card.done .done-banner { display: block; }
+.step-card.done .step-num { background: var(--green); color: white; border: none; }
+
+/* ── TIMER WIDGET ── */
+.timer-row {
+  display: flex; align-items: center; gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+.timer-display {
+  font-size: 22px; font-weight: 700; font-family: 'DM Sans', monospace;
+  min-width: 60px; color: var(--ink);
+}
+.timer-display.warning { color: var(--coral); }
+.timer-btn {
+  padding: 4px 12px; border-radius: 6px;
+  border: 1.5px solid var(--border); background: white;
+  font-size: 13px; font-weight: 600; cursor: pointer;
+  color: var(--ink); font-family: 'DM Sans', sans-serif;
+}
+.timer-btn:active { transform: scale(0.97); }
+.timer-hint { font-size: 12px; color: #aaa; }
+
+/* ── FOOTER ── */
+footer {
+  text-align: center; font-size: 12px; color: #aaa;
+  padding: 1.5rem; border-top: 1px solid var(--border);
+}
+
+/* ── PRINT ── */
+@media print {
+  body { background: white; }
+  .hdr { background: white; border-bottom: 3px solid var(--ink); }
+  .hdr h1 { color: var(--ink); }
+  .hdr h1 em { color: var(--ink); }
+  .hdr-kicker, .hdr p { color: #555; }
+  .progress-wrap { display: none; }
+  .step-body { display: block !important; }
+  .step-head { cursor: default; }
+  .chevron { display: none; }
+  .timer-row { display: none; }
+  .done-banner { display: none !important; }
+  .step-card { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <div class="hdr-kicker">HUMN 110 · Arts &amp; Culture · Midterm</div>
+  <h1>Presentation <em>Checklist</em></h1>
+  <p>Tap each section to open it. Tick off each point as you prepare.</p>
+  <div class="progress-wrap">
+    <div class="progress-bar" id="progress"></div>
+  </div>
+</div>
+
+<div class="page">
+
+  <div class="intro">
+    <strong>How to use this:</strong> Work through each step when preparing. On presentation day, use it as a running order — each section is one "slide" or moment in your talk. You do not need to show every slide. You need to <strong>tell a story</strong>.
+  </div>
+
+  <!-- ══ STEP 1: HOOK ══════════════════════════════════════════ -->
+  <div class="step-card" id="s1">
+    <div class="step-head" onclick="toggle('s1')">
+      <div class="step-num" style="background:#EDE9FF;color:var(--purple);">1</div>
+      <div>
+        <div class="step-title">Hook</div>
+      </div>
+      <span class="chevron">&#8964;</span>
+    </div>
+    <div class="step-body">
+      <ul class="checklist" id="c1">
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>Show a photo or video of your finished artwork</li>
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>Say the title — clearly, with confidence</li>
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>Say nothing else yet. Let them look.</li>
+      </ul>
+      <div class="tip" style="border-color:var(--purple);">
+        <em>Why:</em> Starting with the image creates anticipation. They form their own first impression before you influence it — that makes the final reveal more powerful.
+      </div>
+    </div>
+    <div class="done-banner">&#10003; Done</div>
+  </div>
+
+  <!-- ══ STEP 2: INSPIRATION ═══════════════════════════════════ -->
+  <div class="step-card" id="s2">
+    <div class="step-head" onclick="toggle('s2')">
+      <div class="step-num" style="background:#E1F5EE;color:#0F6E56;">2</div>
+      <div>
+        <div class="step-title">Inspiration</div>
+      </div>
+      <span class="wallas-tag step-wallas" style="background:#E1F5EE;color:#0F6E56;">Wallas: preparation</span>
+      <span class="chevron">&#8964;</span>
+    </div>
+    <div class="step-body">
+      <div class="prompt-q" style="border-color:var(--teal);">Start with a question or a story — not a statement.</div>
+      <ul class="checklist" id="c2">
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>What first sparked this idea? (A moment, an artwork, a feeling)</li>
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>Show your source of inspiration — an image, a song, a memory</li>
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>Show your early brainstorm or research notes if you have them</li>
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>Make us feel why this mattered to you</li>
+      </ul>
+      <div class="tip" style="border-color:var(--teal);">
+        <em>Try:</em> "Have you ever felt..." or "I saw something that I could not stop thinking about..." — then show what it was.
+      </div>
+    </div>
+    <div class="done-banner">&#10003; Done</div>
+  </div>
+
+  <!-- ══ STEP 3: EXPLORATION ═══════════════════════════════════ -->
+  <div class="step-card" id="s3">
+    <div class="step-head" onclick="toggle('s3')">
+      <div class="step-num" style="background:#E1F5EE;color:#0F6E56;">3</div>
+      <div>
+        <div class="step-title">Exploration</div>
+      </div>
+      <span class="wallas-tag step-wallas" style="background:#E1F5EE;color:#0F6E56;">Wallas: incubation</span>
+      <span class="chevron">&#8964;</span>
+    </div>
+    <div class="step-body">
+      <ul class="checklist" id="c3">
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>What ideas did you try first?</li>
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>What did you reject — and why?</li>
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>What kept changing as you worked?</li>
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>Show sketches, drafts, rejected versions if you have them</li>
+      </ul>
+      <div class="tip" style="border-color:var(--teal);">
+        <em>Bonus:</em> Did anything change unexpectedly while you were making it? Happy accidents belong here — they show your creative process honestly.
+      </div>
+    </div>
+    <div class="done-banner">&#10003; Done</div>
+  </div>
+
+  <!-- ══ STEP 4: FINAL PLAN ════════════════════════════════════ -->
+  <div class="step-card" id="s4">
+    <div class="step-head" onclick="toggle('s4')">
+      <div class="step-num" style="background:#E1F5EE;color:#0F6E56;">4</div>
+      <div>
+        <div class="step-title">Final plan — introduce the art</div>
+      </div>
+      <span class="chevron">&#8964;</span>
+    </div>
+    <div class="step-body">
+      <ul class="checklist" id="c4">
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>What did you decide on, and why?</li>
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>Show or describe the artwork clearly</li>
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>Give the audience enough time to look at it</li>
+      </ul>
+      <div class="tip" style="border-color:var(--teal);">
+        <em>Remember:</em> Do not reveal your message yet. Just introduce what they are looking at.
+      </div>
+    </div>
+    <div class="done-banner">&#10003; Done</div>
+  </div>
+
+  <!-- ══ STEP 5: TECHNICAL ═════════════════════════════════════ -->
+  <div class="step-card" id="s5">
+    <div class="step-head" onclick="toggle('s5')">
+      <div class="step-num" style="background:#F1EFE8;color:#5F5E5A;">5</div>
+      <div>
+        <div class="step-title">Technical facts</div>
+      </div>
+      <span class="chevron">&#8964;</span>
+    </div>
+    <div class="step-body">
+      <ul class="checklist" id="c5">
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>What is it made from? (Materials, medium)</li>
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>What tools or techniques did you use?</li>
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>Describe the making process — step by step if needed</li>
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>Stick to objective facts here — no feelings yet</li>
+      </ul>
+      <div class="tip" style="border-color:#aaa;">
+        <em>Think of it like:</em> if a museum card described your work, what would it say?
+      </div>
+    </div>
+    <div class="done-banner">&#10003; Done</div>
+  </div>
+
+  <!-- ══ STEP 6: INTENDED EFFECT ══════════════════════════════ -->
+  <div class="step-card" id="s6">
+    <div class="step-head" onclick="toggle('s6')">
+      <div class="step-num" style="background:#F1EFE8;color:#5F5E5A;">6</div>
+      <div>
+        <div class="step-title">Intended effect</div>
+      </div>
+      <span class="chevron">&#8964;</span>
+    </div>
+    <div class="step-body">
+      <ul class="checklist" id="c6">
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>What emotions did you want the viewer to feel?</li>
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>How does the work try to create those feelings? (Colour, form, composition, texture...)</li>
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>What genre or style does it belong to?</li>
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>Do NOT reveal the message yet — keep the reveal for the end</li>
+      </ul>
+      <div class="tip" style="border-color:#aaa;">
+        <em>The gap matters:</em> "I wanted people to feel X" sets up the final question — did they?
+      </div>
+    </div>
+    <div class="done-banner">&#10003; Done</div>
+  </div>
+
+  <!-- ══ STEP 7: REFLECTION ════════════════════════════════════ -->
+  <div class="step-card" id="s7">
+    <div class="step-head" onclick="toggle('s7')">
+      <div class="step-num" style="background:#FAECE7;color:#993C1D;">7</div>
+      <div>
+        <div class="step-title">Reflection</div>
+      </div>
+      <span class="chevron">&#8964;</span>
+    </div>
+    <div class="step-body">
+      <ul class="checklist" id="c7">
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>When you finished — what did you feel?</li>
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>Did those feelings match what you intended?</li>
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>What would you do differently?</li>
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>What surprised you?</li>
+      </ul>
+      <div class="tip" style="border-color:var(--coral);">
+        <em>Be honest.</em> Saying "it did not go how I planned" is not a failure — it is good critical thinking.
+      </div>
+    </div>
+    <div class="done-banner">&#10003; Done</div>
+  </div>
+
+  <!-- ══ BONUS STEP ════════════════════════════════════════════ -->
+  <div class="step-card" id="sb">
+    <div class="step-head" onclick="toggle('sb')">
+      <div class="step-num" style="background:#FAEEDA;color:#854F0B;">★</div>
+      <div>
+        <div class="step-title">Bonus — audience response</div>
+      </div>
+      <span class="bonus-tag">optional</span>
+      <span class="chevron">&#8964;</span>
+    </div>
+    <div class="step-body">
+      <ul class="checklist" id="cb">
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>Did you show your artwork to anyone before today?</li>
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>What did they say or feel? Was it what you expected?</li>
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>How does this show Hall's theory of encoding and decoding?</li>
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>Did different people from different backgrounds read it differently?</li>
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>What does that tell you about art and communication?</li>
+      </ul>
+      <div class="tip" style="border-color:var(--amber);">
+        <em>Hall's theory:</em> You encode a meaning into the work. The audience decodes it — but their culture, experience and context shapes what they see. Their reading may not match yours. That gap is not a mistake — it is the conversation art creates.
+      </div>
+    </div>
+    <div class="done-banner">&#10003; Done</div>
+  </div>
+
+  <!-- ══ STEP 8: REVEAL ════════════════════════════════════════ -->
+  <div class="step-card" id="s8">
+    <div class="step-head" onclick="toggle('s8')">
+      <div class="step-num" style="background:#EDE9FF;color:var(--purple);">8</div>
+      <div>
+        <div class="step-title">Reveal</div>
+      </div>
+      <span class="chevron">&#8964;</span>
+    </div>
+    <div class="step-body">
+      <ul class="checklist" id="c8">
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>Show the photo or video of your artwork again</li>
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>Now reveal the message — what is this really about?</li>
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>Keep it short. One or two sentences. Let the art speak.</li>
+        <li onclick="tick(this)"><div class="chk">&#10003;</div>Ask if anyone has questions</li>
+      </ul>
+      <div class="tip" style="border-color:var(--purple);">
+        <em>Biggest impact last.</em> Everything in your presentation builds to this moment — do not rush it.
+      </div>
+    </div>
+    <div class="done-banner">&#10003; Done</div>
+  </div>
+
+  <!-- ══ PRESENTATION TIMER ════════════════════════════════════ -->
+  <div style="background:white;border:1.5px solid var(--border);border-radius:10px;padding:1rem 1.1rem;margin-top:1.5rem;">
+    <p style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:2px;color:#aaa;margin-bottom:0.6rem;">Presentation timer</p>
+    <div class="timer-row">
+      <div class="timer-display" id="timer-display">5:00</div>
+      <button class="timer-btn" id="timer-start" onclick="startTimer()">Start</button>
+      <button class="timer-btn" onclick="resetTimer()">Reset</button>
+      <span class="timer-hint" id="timer-hint">Aim for 4–6 minutes</span>
+    </div>
+    <div style="display:flex;gap:0.5rem;margin-top:0.6rem;flex-wrap:wrap;">
+      <button class="timer-btn" onclick="setTimer(180)" style="font-size:12px;">3 min</button>
+      <button class="timer-btn" onclick="setTimer(300)" style="font-size:12px;">5 min</button>
+      <button class="timer-btn" onclick="setTimer(420)" style="font-size:12px;">7 min</button>
+    </div>
+  </div>
+
+  <!-- ══ QUICK REFERENCE CARD ══════════════════════════════════ -->
+  <div style="background:var(--ink);border-radius:10px;padding:1rem 1.1rem;margin-top:1.5rem;color:white;">
+    <p style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:3px;color:var(--lav);margin-bottom:0.7rem;">Quick order — on the day</p>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.4rem 1rem;">
+      <div style="font-size:13px;color:var(--lav);">1. Show artwork + title</div>
+      <div style="font-size:13px;color:var(--lav);">5. Technical facts</div>
+      <div style="font-size:13px;color:var(--lav);">2. Inspiration story</div>
+      <div style="font-size:13px;color:var(--lav);">6. Intended emotions</div>
+      <div style="font-size:13px;color:var(--lav);">3. What you explored</div>
+      <div style="font-size:13px;color:var(--lav);">7. Your reflection</div>
+      <div style="font-size:13px;color:var(--lav);">4. Final decision</div>
+      <div style="font-size:13px;color:var(--gold);">8. Reveal the message</div>
+    </div>
+    <div style="margin-top:0.8rem;padding-top:0.8rem;border-top:1px solid rgba(255,255,255,0.1);font-size:13px;color:rgba(255,255,255,0.5);">
+      ★ Bonus: Hall's theory of decoding — if you showed your work to others
+    </div>
+  </div>
+
+</div>
+<footer>HUMN 110 Arts &amp; Culture &nbsp;·&nbsp; Midterm Presentation &nbsp;·&nbsp; Use this to prepare and on the day</footer>
+
+<script>
+// ── accordion ──────────────────────────────────────────
+function toggle(id) {
+  const card = document.getElementById(id);
+  card.classList.toggle('open');
+}
+
+// ── tick items ─────────────────────────────────────────
+function tick(li) {
+  li.classList.toggle('ticked');
+  updateProgress();
+  // check if all items in this card are ticked
+  const list = li.parentElement;
+  const card = list.closest('.step-card');
+  const all = list.querySelectorAll('li');
+  const ticked = list.querySelectorAll('li.ticked');
+  card.classList.toggle('done', ticked.length === all.length && all.length > 0);
+}
+
+// ── progress ───────────────────────────────────────────
+function updateProgress() {
+  const all = document.querySelectorAll('.checklist li');
+  const ticked = document.querySelectorAll('.checklist li.ticked');
+  const pct = all.length ? (ticked.length / all.length) * 100 : 0;
+  document.getElementById('progress').style.width = Math.round(pct) + '%';
+}
+
+// ── timer ──────────────────────────────────────────────
+let timerSeconds = 300;
+let timerMax = 300;
+let timerInterval = null;
+let running = false;
+
+function setTimer(s) {
+  clearInterval(timerInterval);
+  running = false;
+  timerSeconds = s;
+  timerMax = s;
+  document.getElementById('timer-start').textContent = 'Start';
+  render();
+}
+
+function startTimer() {
+  if (running) {
+    clearInterval(timerInterval);
+    running = false;
+    document.getElementById('timer-start').textContent = 'Resume';
+  } else {
+    running = true;
+    document.getElementById('timer-start').textContent = 'Pause';
+    timerInterval = setInterval(() => {
+      timerSeconds--;
+      if (timerSeconds <= 0) {
+        timerSeconds = 0;
+        clearInterval(timerInterval);
+        running = false;
+        document.getElementById('timer-start').textContent = 'Done';
+        document.getElementById('timer-hint').textContent = 'Time is up!';
+      }
+      render();
+    }, 1000);
+  }
+}
+
+function resetTimer() {
+  clearInterval(timerInterval);
+  running = false;
+  timerSeconds = timerMax;
+  document.getElementById('timer-start').textContent = 'Start';
+  document.getElementById('timer-hint').textContent = 'Aim for 4-6 minutes';
+  render();
+}
+
+function render() {
+  const m = Math.floor(timerSeconds / 60);
+  const s = timerSeconds % 60;
+  const disp = document.getElementById('timer-display');
+  disp.textContent = m + ':' + String(s).padStart(2, '0');
+  disp.classList.toggle('warning', timerSeconds <= 60 && timerSeconds > 0);
+}
+</script>
+</body>
+</html>
