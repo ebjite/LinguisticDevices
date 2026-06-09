@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ESCAPE THE PAGE — Linguistic Devices</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=DM+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap');
+:root {
+  --bg:#F2EDE4; --paper:#FBF8F2; --ink:#1C1208;
+  --red:#C42B1A; --gold:#C08A10; --teal:#1A6B62;
+  --purple:#5A2D82; --blue:#1A3A82; --green:#2A6B2A;
+  --border:#C8B898; --dim:#7A6A58;
+  --lock1:#C42B1A; --lock2:#1A3A82; --lock3:#2A6B2A;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);font-size:15px;line-height:1.6}
+
+/* MASTHEAD */
+.masthead{background:var(--ink);color:var(--bg);padding:1.5rem 2rem 1.2rem;position:relative;overflow:hidden}
+.masthead::after{content:'';position:absolute;right:-40px;top:-40px;width:200px;height:200px;border:20px solid rgba(255,255,255,.04);border-radius:50%}
+.masthead-kicker{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:.35rem}
+.masthead h1{font-family:'Bebas Neue',sans-serif;font-size:4rem;line-height:.9;letter-spacing:3px}
+.masthead h1 span{color:var(--red)}
+.masthead-sub{font-size:14px;color:rgba(255,255,255,.55);margin-top:.5rem}
+
+/* TEAM */
+.team-strip{background:var(--paper);border-bottom:2px solid var(--border);padding:.75rem 2rem;display:flex;gap:1.5rem;flex-wrap:wrap}
+.team-field{display:flex;align-items:center;gap:.5rem;flex:1;min-width:180px}
+.team-field label{font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:var(--dim);white-space:nowrap}
+.team-field input{flex:1;border:none;border-bottom:2px solid var(--border);background:transparent;font-family:'DM Mono',monospace;font-size:14px;color:var(--ink);padding:2px 4px;outline:none}
+.team-field input:focus{border-color:var(--gold)}
+
+/* PROGRESS */
+.progress-outer{height:6px;background:var(--border)}
+.progress-inner{height:6px;background:var(--red);width:0%;transition:width .5s ease}
+
+/* TIMER */
+.timer-bar{position:sticky;top:0;z-index:100;background:var(--ink);color:white;display:flex;align-items:center;justify-content:space-between;padding:.5rem 2rem;font-family:'DM Mono',monospace}
+.timer-display{font-size:1.5rem;color:var(--gold);letter-spacing:2px}
+.timer-display.warn{color:var(--red);animation:pulse 1s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
+.timer-label{font-size:12px;opacity:.6}
+.timer-controls{display:flex;gap:.5rem}
+.tbtn{padding:3px 10px;border-radius:3px;border:1px solid rgba(255,255,255,.3);background:transparent;color:white;font-size:12px;cursor:pointer;font-family:'DM Mono',monospace}
+
+/* PAGE */
+.page{max-width:960px;margin:0 auto;padding:1.5rem 1.5rem 4rem}
+
+/* LOCK */
+.lock{border:2px solid var(--border);border-radius:4px;margin-bottom:2rem;background:var(--paper);overflow:hidden}
+.lock-header{display:flex;align-items:center;gap:1rem;padding:.9rem 1.2rem;border-bottom:2px solid;cursor:pointer;user-select:none}
+.lock-icon{font-size:1.6rem;flex-shrink:0}
+.lock-num{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:3px;flex-shrink:0}
+.lock-title{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:2px;flex:1}
+.lock-status{font-size:12px;font-weight:700;letter-spacing:2px;padding:3px 10px;border-radius:2px;text-transform:uppercase;flex-shrink:0}
+.lock-body{padding:1.2rem 1.5rem;display:none}
+.lock.open .lock-body{display:block}
+#lock1 .lock-header{border-color:var(--lock1);background:#FDF4F2}
+#lock1 .lock-num,#lock1 .lock-title{color:var(--lock1)}
+#lock1 .lock-icon{color:var(--lock1)}
+#lock2 .lock-header{border-color:var(--lock2);background:#F2F4FD}
+#lock2 .lock-num,#lock2 .lock-title{color:var(--lock2)}
+#lock2 .lock-icon{color:var(--lock2)}
+#lock3 .lock-header{border-color:var(--lock3);background:#F2FAF2}
+#lock3 .lock-num,#lock3 .lock-title{color:var(--lock3)}
+#lock3 .lock-icon{color:var(--lock3)}
+.solved-badge{display:none;background:var(--green);color:white;font-size:11px;font-weight:700;letter-spacing:2px;padding:3px 10px;border-radius:2px}
+.lock.solved .solved-badge{display:inline-block}
+.lock.solved .lock-status{display:none}
+.lock.solved .lock-header{opacity:.7}
+
+/* ── LOCK 1: LETTER MATCHING ── */
+.match-instruction{font-size:14px;color:var(--dim);margin-bottom:1.25rem;line-height:1.6}
+.devices-label-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-bottom:1.5rem}
+.device-badge{display:flex;align-items:center;gap:.6rem;background:#FDF4F2;border:2px solid var(--lock1);border-radius:4px;padding:.5rem .8rem;font-weight:700;color:var(--lock1);font-size:14px}
+.device-letter{background:var(--lock1);color:white;border-radius:2px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0}
+
+.defs-list{display:flex;flex-direction:column;gap:.6rem;margin-bottom:1.25rem}
+.def-row{display:flex;align-items:flex-start;gap:.75rem;background:var(--bg);border:1.5px solid var(--border);border-radius:4px;padding:.6rem .85rem}
+.def-row-num{background:var(--ink);color:white;border-radius:2px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex-shrink:0;margin-top:1px}
+.def-row-text{flex:1;font-size:13px;color:var(--ink)}
+.def-row select{border:2px solid var(--border);border-radius:3px;padding:4px 8px;font-family:'DM Mono',monospace;font-size:13px;color:var(--ink);background:white;cursor:pointer;min-width:130px;outline:none}
+.def-row select:focus{border-color:var(--lock1)}
+.def-row.correct{border-color:var(--green);background:#F2FAF2}
+.def-row.wrong{border-color:var(--red);background:#FDF4F2}
+.def-row select.correct-sel{border-color:var(--green);color:var(--green);font-weight:700}
+.def-row select.wrong-sel{border-color:var(--red);color:var(--red)}
+
+.check-btn{margin-top:.5rem;padding:.6rem 1.5rem;background:var(--lock1);color:white;border:none;border-radius:4px;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;cursor:pointer;transition:background .15s}
+.check-btn:hover{background:#9A1A0A}
+.check-btn:disabled{background:var(--green);cursor:default}
+.score-row{display:flex;align-items:center;gap:1rem;margin-top:.75rem;font-size:14px}
+.score-num{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--lock1)}
+
+/* ── LOCK 2: HIGHLIGHT ── */
+.hl-instructions{font-size:13px;color:var(--dim);margin-bottom:1rem}
+.colour-key{display:flex;flex-wrap:wrap;gap:.5rem 1rem;margin-bottom:1rem}
+.chip{display:flex;align-items:center;gap:.4rem;font-size:13px;cursor:pointer;padding:3px 6px;border-radius:3px;border:2px solid transparent}
+.chip.active{border-color:var(--ink);font-weight:700}
+.chip-box{width:18px;height:18px;border-radius:3px;border:1px solid rgba(0,0,0,.12)}
+.erase-btn{padding:4px 12px;border-radius:3px;border:1.5px solid var(--border);background:white;font-size:12px;cursor:pointer;font-family:'DM Sans',sans-serif}
+.erase-btn.active{border-color:var(--ink);font-weight:700}
+.song-block{background:var(--bg);border:1.5px solid var(--border);border-radius:4px;margin-bottom:1rem;overflow:hidden}
+.song-hdr{background:var(--ink);color:white;display:flex;justify-content:space-between;align-items:center;padding:.5rem 1rem}
+.song-hdr .t{font-weight:700;font-size:14px}
+.song-hdr .a{font-size:12px;color:rgba(255,255,255,.5);font-family:'DM Mono',monospace}
+.song-body{padding:1rem 1.25rem}
+.lyric-line{font-family:'DM Mono',monospace;font-size:14px;line-height:2.2;display:block}
+.lyric-line .w{cursor:pointer;border-radius:3px;padding:0 2px;transition:background .1s}
+.song-q{margin-top:.75rem;padding-top:.65rem;border-top:1px dashed var(--border);font-size:13px;font-weight:700;color:var(--dim)}
+.submit-hl{margin-top:1rem;padding:.6rem 1.5rem;background:var(--lock2);color:white;border:none;border-radius:4px;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;cursor:pointer}
+.submit-hl:hover{background:#0A1A62}
+.submit-hl:disabled{background:var(--green);cursor:default}
+
+/* ── LOCK 3: REWRITE ── */
+.boring-poem{background:#F2EDE4;border:2px dashed var(--border);border-radius:4px;padding:1rem 1.25rem;margin-bottom:1rem;font-family:'DM Mono',monospace;font-size:14px;line-height:2}
+.poem-label{font-size:10px;font-weight:700;letter-spacing:3px;text-transform:uppercase;color:var(--dim);margin-bottom:.35rem}
+.stanza{color:var(--dim);font-size:11px;font-weight:700;letter-spacing:2px;margin:.5rem 0 .15rem}
+
+/* ── EXAMPLE LINES (pre-filled hints) ── */
+.example-line{display:flex;align-items:flex-start;gap:.75rem;margin-bottom:1rem;background:var(--paper);border:1.5px solid var(--border);border-radius:4px;padding:.65rem .9rem;position:relative}
+.ex-label{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dim);white-space:nowrap;padding-top:2px;min-width:80px}
+.ex-original{font-family:'DM Mono',monospace;font-size:13px;color:#9A8A78;flex-shrink:0;min-width:200px;font-style:italic}
+.ex-arrow{color:var(--dim);flex-shrink:0;padding:0 4px}
+.ex-input{flex:1;border:none;border-bottom:2px solid var(--border);background:transparent;font-family:'DM Mono',monospace;font-size:13px;color:var(--ink);outline:none;padding:2px 4px;min-width:0}
+.ex-input:focus{border-color:var(--lock3)}
+.hint-btn{flex-shrink:0;background:var(--gold);color:white;border:none;border-radius:3px;padding:3px 10px;font-size:11px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;letter-spacing:1px;white-space:nowrap}
+.hint-btn:hover{background:#9A6A08}
+.hint-box{display:none;margin-top:.5rem;padding:.5rem .75rem;background:#FEF9EE;border-left:3px solid var(--gold);border-radius:0 4px 4px 0;font-size:12px;color:#5A4A10;width:100%}
+.hint-box.show{display:block}
+.hint-box strong{display:block;font-size:11px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);margin-bottom:.2rem}
+
+/* ── DEVICE CHECKBOXES ── */
+.devices-used{display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-bottom:1rem}
+.device-tick{display:flex;align-items:center;gap:.4rem;font-size:13px;cursor:pointer}
+.device-tick input{width:16px;height:16px;accent-color:var(--lock3);cursor:pointer}
+.submit-final{width:100%;padding:.9rem 2rem;background:var(--ink);color:white;border:none;border-radius:4px;font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:4px;cursor:pointer;transition:background .15s}
+.submit-final:hover{background:var(--lock3)}
+.submit-final:disabled{background:var(--green);cursor:default}
+
+/* ── NOTEBOOK MODAL ── */
+.modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:999;align-items:center;justify-content:center}
+.modal-overlay.show{display:flex}
+.modal-box{background:var(--paper);border:3px solid var(--ink);border-radius:6px;padding:2.5rem 2rem;max-width:420px;width:90%;text-align:center}
+.modal-box .notebook-emoji{font-size:4rem;display:block;margin-bottom:.75rem}
+.modal-box h2{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;letter-spacing:3px;color:var(--ink);margin-bottom:.5rem}
+.modal-box p{font-size:15px;color:var(--dim);margin-bottom:1.5rem;line-height:1.5}
+.modal-ok{background:var(--ink);color:white;border:none;border-radius:4px;padding:.65rem 2rem;font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:3px;cursor:pointer;width:100%}
+.modal-ok:hover{background:var(--green)}
+
+/* ── ESCAPED ── */
+.escaped{display:none;text-align:center;padding:3rem 2rem}
+.escaped.show{display:block}
+.escaped-emoji{font-size:5rem;margin-bottom:1rem}
+.escaped h2{font-family:'Bebas Neue',sans-serif;font-size:3.5rem;letter-spacing:4px;color:var(--green);margin-bottom:.5rem}
+.escaped p{font-size:16px;color:var(--dim);margin-bottom:1rem}
+.final-time{font-family:'Bebas Neue',sans-serif;font-size:4rem;color:var(--ink)}
+</style>
+</head>
+<body>
+
+<!-- NOTEBOOK MODAL -->
+<div class="modal-overlay" id="notebookModal">
+  <div class="modal-box">
+    <span class="notebook-emoji">📓</span>
+    <h2>Take Notes!</h2>
+    <p>Before moving on — write down the device names and definitions in your notebook.<br><br>Make your own example for each one. Do it now, while it's fresh.</p>
+    <button class="modal-ok" id="modalOkBtn">OK, done →</button>
+  </div>
+</div>
+
+<!-- MASTHEAD -->
+<div class="masthead">
+  <div class="masthead-kicker">HUMN 110 · Lesson 11 · Group Challenge</div>
+  <h1>ESCAPE<br><span>THE PAGE</span></h1>
+  <div class="masthead-sub">3 locks · 25 minutes · one team submits · can you escape?</div>
+</div>
+
+<!-- TEAM STRIP -->
+<div class="team-strip">
+  <div class="team-field">
+    <label>Team Name</label>
+    <input type="text" id="teamName" placeholder="e.g. The Metaphor Mob" maxlength="40">
+  </div>
+  <div class="team-field">
+    <label>Members</label>
+    <input type="text" id="members" placeholder="Names separated by commas" maxlength="120">
+  </div>
+  <div class="team-field" style="flex:0 0 auto;">
+    <label>Submitter</label>
+    <input type="text" id="submitter" placeholder="Your name" maxlength="40" style="width:160px;">
+  </div>
+</div>
+
+<div class="progress-outer"><div class="progress-inner" id="progressBar"></div></div>
+
+<!-- TIMER -->
+<div class="timer-bar">
+  <div>
+    <div class="timer-label">TIME REMAINING</div>
+    <div class="timer-display" id="timerDisplay">25:00</div>
+  </div>
+  <div class="timer-label" id="lockStatus">🔒 Lock 1 · 🔒 Lock 2 · 🔒 Lock 3</div>
+  <div class="timer-controls">
+    <button class="tbtn" id="timerStartBtn" onclick="startTimer()">START</button>
+    <button class="tbtn" onclick="resetTimer()">RESET</button>
+  </div>
+</div>
+
+<div class="page">
+
+<!-- ══ LOCK 1 ══════════════════════════════════════════════════ -->
+<div class="lock open" id="lock1">
+  <div class="lock-header" onclick="toggleLock('lock1')">
+    <div class="lock-icon">🔒</div>
+    <div class="lock-num">LOCK 01</div>
+    <div class="lock-title">Name the Device</div>
+    <div class="lock-status" style="background:#FDF4F2;color:var(--lock1);border:1px solid var(--lock1);">IN PROGRESS</div>
+    <div class="solved-badge">✓ UNLOCKED</div>
+  </div>
+  <div class="lock-body">
+    <p class="match-instruction">Each device has a letter. Each definition has a number. Type the correct letter in the dropdown next to each definition. You can change your answer any time before checking.</p>
+
+    <!-- Device legend — letters A–F -->
+    <div class="devices-label-grid">
+      <div class="device-badge"><div class="device-letter">A</div>Alliteration</div>
+      <div class="device-badge"><div class="device-letter">B</div>Rhyme</div>
+      <div class="device-badge"><div class="device-letter">C</div>Rhythm</div>
+      <div class="device-badge"><div class="device-letter">D</div>Repetition</div>
+      <div class="device-badge"><div class="device-letter">E</div>Simile</div>
+      <div class="device-badge"><div class="device-letter">F</div>Metaphor</div>
+    </div>
+
+    <!-- Definitions with select dropdowns — can change freely -->
+    <div class="defs-list" id="defsList">
+      <div class="def-row" data-answer="A">
+        <div class="def-row-num">1</div>
+        <div class="def-row-text">Same consonant sound repeated at the start of nearby words. <em>"Peter Piper picked..."</em></div>
+        <select data-def="1"><option value="">— pick —</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option></select>
+      </div>
+      <div class="def-row" data-answer="B">
+        <div class="def-row-num">2</div>
+        <div class="def-row-text">Words with matching end sounds, usually at the end of lines. <em>"bright / night"</em></div>
+        <select data-def="2"><option value="">— pick —</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option></select>
+      </div>
+      <div class="def-row" data-answer="C">
+        <div class="def-row-num">3</div>
+        <div class="def-row-text">A pattern of stressed and unstressed syllables — the beat under the words. <em>"DA-da-DA-da"</em></div>
+        <select data-def="3"><option value="">— pick —</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option></select>
+      </div>
+      <div class="def-row" data-answer="D">
+        <div class="def-row-num">4</div>
+        <div class="def-row-text">A word or phrase repeated deliberately for emphasis or emotional effect. <em>"We don't need... We don't need..."</em></div>
+        <select data-def="4"><option value="">— pick —</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option></select>
+      </div>
+      <div class="def-row" data-answer="E">
+        <div class="def-row-num">5</div>
+        <div class="def-row-text">A comparison using LIKE or AS to link two different things. <em>"Life is <u>like</u> a river"</em></div>
+        <select data-def="5"><option value="">— pick —</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option></select>
+      </div>
+      <div class="def-row" data-answer="F">
+        <div class="def-row-num">6</div>
+        <div class="def-row-text">Saying something IS something else — no like or as. Creates a vivid picture. <em>"The city is a beast"</em></div>
+        <select data-def="6"><option value="">— pick —</option><option>A</option><option>B</option><option>C</option><option>D</option><option>E</option><option>F</option></select>
+      </div>
+    </div>
+
+    <button class="check-btn" id="checkMatch" onclick="checkMatch()">CHECK ANSWERS</button>
+    <div class="score-row">
+      <div class="score-num" id="matchScore">—</div>
+      <div style="color:var(--dim);font-size:13px;"> / 6 correct</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ LOCK 2 ══════════════════════════════════════════════════ -->
+<div class="lock" id="lock2">
+  <div class="lock-header" onclick="toggleLock('lock2')">
+    <div class="lock-icon">🔒</div>
+    <div class="lock-num">LOCK 02</div>
+    <div class="lock-title">Colour the Lyrics</div>
+    <div class="lock-status" style="background:#F2F4FD;color:var(--lock2);border:1px solid var(--lock2);">LOCKED</div>
+    <div class="solved-badge">✓ UNLOCKED</div>
+  </div>
+  <div class="lock-body">
+    <p class="hl-instructions">Select a device colour below, then <strong>click any word</strong> to highlight it. Find at least <strong>8 devices total</strong> across the 3 songs. Name everything you find in the box at the bottom.</p>
+
+    <div class="colour-key" id="colorKey">
+      <div class="chip active" data-col="#FFD966" onclick="selectColor(this,'#FFD966')"><div class="chip-box" style="background:#FFD966"></div>A — Alliteration</div>
+      <div class="chip" data-col="#FF9999" onclick="selectColor(this,'#FF9999')"><div class="chip-box" style="background:#FF9999"></div>B — Rhyme</div>
+      <div class="chip" data-col="#82E0AA" onclick="selectColor(this,'#82E0AA')"><div class="chip-box" style="background:#82E0AA"></div>C — Rhythm</div>
+      <div class="chip" data-col="#85C1E9" onclick="selectColor(this,'#85C1E9')"><div class="chip-box" style="background:#85C1E9"></div>D — Repetition</div>
+      <div class="chip" data-col="#F0A8D0" onclick="selectColor(this,'#F0A8D0')"><div class="chip-box" style="background:#F0A8D0"></div>E — Simile</div>
+      <div class="chip" data-col="#C39BD3" onclick="selectColor(this,'#C39BD3')"><div class="chip-box" style="background:#C39BD3"></div>F — Metaphor</div>
+      <button class="erase-btn" id="eraseBtn" onclick="selectErase()">✕ Erase</button>
+    </div>
+
+    <div class="song-block">
+      <div class="song-hdr"><span class="t">The Sound of Silence</span><span class="a">Simon &amp; Garfunkel · 1964</span></div>
+      <div class="song-body">
+        <span class="lyric-line" data-hl>Hello darkness, my old friend,</span>
+        <span class="lyric-line" data-hl>I've come to talk with you again,</span>
+        <span class="lyric-line" data-hl>Because a vision softly creeping,</span>
+        <span class="lyric-line" data-hl>Left its seeds while I was sleeping,</span>
+        <span class="lyric-line" data-hl>And the vision that was planted in my brain</span>
+        <span class="lyric-line" data-hl>Still remains</span>
+        <span class="lyric-line" data-hl>Within the sound of silence.</span>
+      </div>
+    </div>
+    <div class="song-block">
+      <div class="song-hdr"><span class="t">In the Summertime</span><span class="a">Mungo Jerry · 1970</span></div>
+      <div class="song-body">
+        <span class="lyric-line" data-hl>In the summertime when the weather is high,</span>
+        <span class="lyric-line" data-hl>You can stretch right up and touch the sky,</span>
+        <span class="lyric-line" data-hl>When the weather's fine you got women, you got women on your mind,</span>
+        <span class="lyric-line" data-hl>Have a drink, have a drive, go out and see what you can find.</span>
+      </div>
+    </div>
+    <div class="song-block">
+      <div class="song-hdr"><span class="t">Hi Ren (excerpt)</span><span class="a">Ren · 2022</span></div>
+      <div class="song-body">
+        <span class="lyric-line" data-hl>I've been fighting all my life,</span>
+        <span class="lyric-line" data-hl>I've been fighting all my life.</span>
+        <span class="lyric-line" data-hl>My mind is a battlefield, a warzone, a knife,</span>
+        <span class="lyric-line" data-hl>A weapon unsheathed and a scar from the strife.</span>
+        <span class="lyric-line" data-hl>So come on then, let's go — show me what you've got,</span>
+        <span class="lyric-line" data-hl>Because my soul is a soldier and it cannot be bought.</span>
+      </div>
+    </div>
+
+    <p style="font-size:12px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:.4rem;margin-top:.75rem;">Devices found — name each one and the song:</p>
+    <textarea id="devicesFound" rows="5" style="width:100%;border:2px solid var(--border);border-radius:4px;padding:.6rem;font-family:'DM Mono',monospace;font-size:13px;resize:vertical;outline:none;" placeholder="e.g.  A (Alliteration) — 'softly, seeds, sleeping' — Sound of Silence&#10;B (Rhyme) — 'friend / again' — Sound of Silence&#10;D (Repetition) — 'I've been fighting all my life' x2 — Hi Ren&#10;..."></textarea>
+    <button class="submit-hl" id="submitHL" onclick="submitHighlight()" style="margin-top:.75rem;">SUBMIT LOCK 2</button>
+  </div>
+</div>
+
+<!-- ══ LOCK 3 ══════════════════════════════════════════════════ -->
+<div class="lock" id="lock3">
+  <div class="lock-header" onclick="toggleLock('lock3')">
+    <div class="lock-icon">🔒</div>
+    <div class="lock-num">LOCK 03</div>
+    <div class="lock-title">Rewrite &amp; Escape</div>
+    <div class="lock-status" style="background:#F2FAF2;color:var(--lock3);border:1px solid var(--lock3);">LOCKED</div>
+    <div class="solved-badge">✓ UNLOCKED</div>
+  </div>
+  <div class="lock-body">
+    <p style="font-size:14px;color:var(--dim);margin-bottom:1rem;">Rewrite each line to use a device. The original is shown — type your improved version. Use the <strong>HINT</strong> button if you're stuck. Use at least <strong>4 different devices</strong> across the whole poem.</p>
+
+    <div class="boring-poem">
+      <div class="poem-label">The original — rewrite line by line below</div>
+      <div class="stanza">[Stanza 1]</div>
+      The sun rose high, up into the sky.<br>
+      The rain came down, it fell all night.<br>
+      She ate rice. It was okay.<br>
+      The city was loud. She was tired.<br>
+      <div class="stanza">[Stanza 2]</div>
+      She ran to catch the bus.<br>
+      He walked to the shop.<br>
+      The dog slept in the sun.<br>
+      He heard music from outside.<br>
+      <div class="stanza">[Ending]</div>
+      OK. Goodbye.
+    </div>
+
+    <!-- Rewrite lines with individual hints -->
+    <div style="margin-bottom:1.25rem;">
+
+      <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin-bottom:.6rem;">[Stanza 1]</div>
+
+      <div class="example-line">
+        <span class="ex-label">Line 1</span>
+        <span class="ex-original">The sun rose high...</span>
+        <span class="ex-arrow">→</span>
+        <input class="ex-input" id="r1" placeholder="your version...">
+        <button class="hint-btn" onclick="toggleHint('h1')">HINT</button>
+        <div class="hint-box" id="h1">
+          <strong>Try: Metaphor or Simile</strong>
+          Could the sun be something else? A beast? An eye? A door opening?<br>
+          Or — what does it rise <em>like</em>? "The sun clawed its way up like a burning eye..."
+        </div>
+      </div>
+
+      <div class="example-line">
+        <span class="ex-label">Line 2</span>
+        <span class="ex-original">The rain came down...</span>
+        <span class="ex-arrow">→</span>
+        <input class="ex-input" id="r2" placeholder="your version...">
+        <button class="hint-btn" onclick="toggleHint('h2')">HINT</button>
+        <div class="hint-box" id="h2">
+          <strong>Try: Imagery</strong>
+          Make us feel it. Cold? Heavy? Loud on a roof? Smell of wet earth?<br>
+          Try words like: <em>hammered · whispered · clattered · swallowed · drummed</em>
+        </div>
+      </div>
+
+      <div class="example-line">
+        <span class="ex-label">Line 3</span>
+        <span class="ex-original">She ate rice.</span>
+        <span class="ex-arrow">→</span>
+        <input class="ex-input" id="r3" placeholder="your version...">
+        <button class="hint-btn" onclick="toggleHint('h3')">HINT</button>
+        <div class="hint-box" id="h3">
+          <strong>Try: Imagery (all 5 senses)</strong>
+          What did it smell like? Sound like? Feel like in her mouth?<br>
+          Try: "She lifted the first grain to her lips, steam rising like a small ghost..."<br>
+          Or go longer — this was our class example!
+        </div>
+      </div>
+
+      <div class="example-line">
+        <span class="ex-label">Line 4</span>
+        <span class="ex-original">The city was loud. She was tired.</span>
+        <span class="ex-arrow">→</span>
+        <input class="ex-input" id="r4" placeholder="your version...">
+        <button class="hint-btn" onclick="toggleHint('h4')">HINT</button>
+        <div class="hint-box" id="h4">
+          <strong>Try: Simile — use LIKE or AS</strong>
+          Did you use the word LIKE or AS in your sentence? If not, it's not a simile!<br>
+          "The city roared like a market that never slept. She was hollow as an empty jar."
+        </div>
+      </div>
+
+      <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin:.8rem 0 .6rem;">[Stanza 2]</div>
+
+      <div class="example-line">
+        <span class="ex-label">Line 5</span>
+        <span class="ex-original">She ran to catch the bus.</span>
+        <span class="ex-arrow">→</span>
+        <input class="ex-input" id="r5" placeholder="your version...">
+        <button class="hint-btn" onclick="toggleHint('h5')">HINT</button>
+        <div class="hint-box" id="h5">
+          <strong>Try: Alliteration</strong>
+          Replace as many words as possible with ones starting with the same letter.<br>
+          What letter will you choose? S? B? C?<br>
+          "She sprinted, stumbling, struggling for the steel-and-smoke bus..."
+        </div>
+      </div>
+
+      <div class="example-line">
+        <span class="ex-label">Line 6</span>
+        <span class="ex-original">He walked to the shop.</span>
+        <span class="ex-arrow">→</span>
+        <input class="ex-input" id="r6" placeholder="your version...">
+        <button class="hint-btn" onclick="toggleHint('h6')">HINT</button>
+        <div class="hint-box" id="h6">
+          <strong>Try: Alliteration — this was our class example!</strong>
+          "He bounced brazenly around for the big beautiful bargain bin to buy a bounty."<br>
+          Pick your own letter and go wild. Keep the meaning — just change the words.
+        </div>
+      </div>
+
+      <div class="example-line">
+        <span class="ex-label">Line 7</span>
+        <span class="ex-original">The dog slept in the sun.</span>
+        <span class="ex-arrow">→</span>
+        <input class="ex-input" id="r7" placeholder="your version...">
+        <button class="hint-btn" onclick="toggleHint('h7')">HINT</button>
+        <div class="hint-box" id="h7">
+          <strong>Try: Metaphor or Personification</strong>
+          What if the dog IS something? Or the sun IS something?<br>
+          "The dog dissolved into the afternoon, a warm comma on the pavement."<br>
+          Or make the sun do something human — shine? Watch? Press down?
+        </div>
+      </div>
+
+      <div class="example-line">
+        <span class="ex-label">Line 8</span>
+        <span class="ex-original">He heard music from outside.</span>
+        <span class="ex-arrow">→</span>
+        <input class="ex-input" id="r8" placeholder="your version...">
+        <button class="hint-btn" onclick="toggleHint('h8')">HINT</button>
+        <div class="hint-box" id="h8">
+          <strong>Try: Imagery + Simile</strong>
+          What did the music sound like? Feel like on his skin? Smell like?<br>
+          Try onomatopoeia — words that sound like what they describe: <em>thrum, hum, pulse, drift, bleed</em><br>
+          "The bass hummed through the walls like a second heartbeat."
+        </div>
+      </div>
+
+      <div style="font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--dim);margin:.8rem 0 .6rem;">[Ending]</div>
+
+      <div class="example-line">
+        <span class="ex-label">Ending</span>
+        <span class="ex-original">OK. Goodbye.</span>
+        <span class="ex-arrow">→</span>
+        <input class="ex-input" id="r9" placeholder="make it memorable...">
+        <button class="hint-btn" onclick="toggleHint('h9')">HINT</button>
+        <div class="hint-box" id="h9">
+          <strong>Try: Repetition</strong>
+          The ending should land. Repeat something from earlier. Or use a short, punchy rhythm.<br>
+          "And still the sun rose. And still the rain fell. And still — silence."<br>
+          Or go simple and powerful: three words. Make them count.
+        </div>
+      </div>
+
+    </div>
+
+    <p style="font-size:12px;font-weight:700;color:var(--dim);text-transform:uppercase;letter-spacing:1px;margin-bottom:.5rem;">Devices I used — tick at least 4:</p>
+    <div class="devices-used">
+      <label class="device-tick"><input type="checkbox" name="dev" value="Alliteration"> A — Alliteration</label>
+      <label class="device-tick"><input type="checkbox" name="dev" value="Rhyme"> B — Rhyme</label>
+      <label class="device-tick"><input type="checkbox" name="dev" value="Rhythm"> C — Rhythm</label>
+      <label class="device-tick"><input type="checkbox" name="dev" value="Repetition"> D — Repetition</label>
+      <label class="device-tick"><input type="checkbox" name="dev" value="Simile"> E — Simile</label>
+      <label class="device-tick"><input type="checkbox" name="dev" value="Metaphor"> F — Metaphor</label>
+    </div>
+
+    <button class="submit-final" id="submitFinal" onclick="submitAll()">🔓 ESCAPE THE PAGE</button>
+  </div>
+</div>
+
+<!-- ESCAPED -->
+<div class="escaped" id="escapedScreen">
+  <div class="escaped-emoji">🎉</div>
+  <h2>ESCAPED!</h2>
+  <p id="escapedTeamName" style="font-size:1.2rem;font-weight:700;color:var(--ink);"></p>
+  <p>Your time:</p>
+  <div class="final-time" id="finalTime"></div>
+  <div id="slidoReminder" style="display:none;margin-top:1.5rem;background:#FEF9EE;border:2px solid #C08A10;border-radius:6px;padding:1.25rem 1.5rem;text-align:left;">
+    <div style="font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:2px;color:#C08A10;margin-bottom:.5rem;">NOW — POST TO SLIDO</div>
+    <p style="font-size:14px;color:#1C1208;margin-bottom:.75rem;">Copy your best rewrite line — or your whole poem — and post it to Slido now.</p>
+    <ol style="font-size:13px;color:#5A4A10;line-height:2;padding-left:1.2rem;">
+      <li>Go to <strong>slido.com</strong> or open Slido on your phone</li>
+      <li>Enter the room code your teacher has on the screen</li>
+      <li>Paste your rewrite into the open text box</li>
+      <li>Submit — then vote for your favourite from another team</li>
+    </ol>
+  </div>
+  <p style="margin-top:1rem;font-size:13px;color:var(--dim);">Wait for your teacher to read the best ones aloud.</p>
+</div>
+
+</div><!-- /page -->
+
+<script>
+// ══ TIMER ═══════════════════════════════════════════════════
+let timerSec=25*60, timerMax=25*60, timerInt=null, running=false, startTs=null;
+function startTimer(){
+  if(running){clearInterval(timerInt);running=false;document.getElementById('timerStartBtn').textContent='RESUME';return}
+  if(!startTs)startTs=Date.now()-(timerMax-timerSec)*1000;
+  running=true;document.getElementById('timerStartBtn').textContent='PAUSE';
+  timerInt=setInterval(()=>{timerSec--;renderTimer();if(timerSec<=0){clearInterval(timerInt);running=false}},1000);
+}
+function resetTimer(){clearInterval(timerInt);running=false;timerSec=timerMax;startTs=null;document.getElementById('timerStartBtn').textContent='START';renderTimer()}
+function renderTimer(){
+  const m=Math.floor(timerSec/60),s=timerSec%60;
+  const el=document.getElementById('timerDisplay');
+  el.textContent=m+':'+String(s).padStart(2,'0');
+  el.classList.toggle('warn',timerSec<=120);
+}
+function getElapsed(){if(!startTs)return'—';const ms=Date.now()-startTs,m=Math.floor(ms/60000),s=Math.floor((ms%60000)/1000);return m+':'+String(s).padStart(2,'0')}
+
+// ══ ACCORDION ═══════════════════════════════════════════════
+function toggleLock(id){document.getElementById(id).classList.toggle('open')}
+
+// ══ NOTEBOOK MODAL ══════════════════════════════════════════
+let modalCallback=null;
+function showNotebook(cb){
+  modalCallback=cb;
+  document.getElementById('notebookModal').classList.add('show');
+}
+document.getElementById('modalOkBtn').onclick=function(){
+  document.getElementById('notebookModal').classList.remove('show');
+  if(modalCallback)modalCallback();
+  modalCallback=null;
+}
+
+// ══ LOCK 1: DROPDOWN MATCHING ═══════════════════════════════
+function checkMatch(){
+  let score=0;
+  document.querySelectorAll('.def-row').forEach(row=>{
+    const sel=row.querySelector('select');
+    const correct=row.dataset.answer;
+    const chosen=sel.value;
+    if(!chosen){row.classList.remove('correct','wrong');sel.classList.remove('correct-sel','wrong-sel');return}
+    if(chosen===correct){score++;row.classList.add('correct');row.classList.remove('wrong');sel.classList.add('correct-sel');sel.classList.remove('wrong-sel')}
+    else{row.classList.add('wrong');row.classList.remove('correct');sel.classList.add('wrong-sel');sel.classList.remove('correct-sel')}
+  });
+  document.getElementById('matchScore').textContent=score;
+  if(score===6){
+    document.getElementById('checkMatch').disabled=true;
+    document.getElementById('checkMatch').textContent='✓ ALL CORRECT';
+    // Freeze dropdowns
+    document.querySelectorAll('.def-row select').forEach(s=>s.disabled=true);
+    // Show notebook modal, then open lock 2
+    showNotebook(()=>{
+      solveLock('lock1');
+      setTimeout(()=>{
+        document.getElementById('lock2').classList.add('open');
+        document.getElementById('lock2').scrollIntoView({behavior:'smooth',block:'start'});
+      },400);
+    });
+  }
+}
+
+// ══ LOCK 2: HIGHLIGHTING ════════════════════════════════════
+let activeColor='#FFD966', erasing=false;
+function selectColor(chip,col){
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  document.getElementById('eraseBtn').classList.remove('active');
+  chip.classList.add('active');activeColor=col;erasing=false;
+}
+function selectErase(){
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  document.getElementById('eraseBtn').classList.add('active');erasing=true;
+}
+document.querySelectorAll('.lyric-line[data-hl]').forEach(line=>{
+  line.innerHTML=line.textContent.split(/(\s+)/).map(tok=>tok.trim()?`<span class="w">${tok}</span>`:tok).join('');
+  line.querySelectorAll('.w').forEach(w=>{
+    w.addEventListener('click',()=>{
+      if(erasing){w.style.background='';w.style.borderRadius=''}
+      else{w.style.background=activeColor;w.style.borderRadius='3px'}
+    });
+  });
+});
+function submitHighlight(){
+  const found=document.getElementById('devicesFound').value.trim();
+  if(found.length<20){alert('Please name at least a few devices you found before submitting.');return}
+  document.getElementById('submitHL').textContent='✓ LOCK 2 SUBMITTED';
+  document.getElementById('submitHL').disabled=true;
+  // Notebook modal, then open lock 3
+  showNotebook(()=>{
+    solveLock('lock2');
+    setTimeout(()=>{
+      document.getElementById('lock3').classList.add('open');
+      document.getElementById('lock3').scrollIntoView({behavior:'smooth',block:'start'});
+    },400);
+  });
+}
+
+// ══ LOCK 3: HINTS ═══════════════════════════════════════════
+function toggleHint(id){
+  const box=document.getElementById(id);
+  box.classList.toggle('show');
+}
+
+// ══ LOCK 3: SUBMIT ══════════════════════════════════════════
+function submitAll(){
+  const team=document.getElementById('teamName').value.trim();
+  const members=document.getElementById('members').value.trim();
+  const submitter=document.getElementById('submitter').value.trim();
+  const lines=['r1','r2','r3','r4','r5','r6','r7','r8','r9'].map(id=>document.getElementById(id).value.trim());
+  const filled=lines.filter(l=>l.length>0).length;
+  const devicesFound=document.getElementById('devicesFound').value.trim();
+  const checked=[...document.querySelectorAll('input[name="dev"]:checked')].map(c=>c.value);
+  if(!team){alert('Please enter your team name first.');return}
+  if(filled<7){alert('Please complete at least 7 of the 9 rewrite lines before submitting.');return}
+  if(checked.length<4){alert('Tick at least 4 devices you used.');return}
+  const elapsed=getElapsed();
+  const rewriteText=lines.map((l,i)=>['Line 1','Line 2','Line 3','Line 4','Line 5','Line 6','Line 7','Line 8','Ending'][i]+': '+l).join('\n');
+  const submission={timestamp:new Date().toISOString(),team,members,submitter,elapsed,matchScore:document.getElementById('matchScore').textContent,devicesFound,rewrite:rewriteText,devicesUsed:checked.join(', ')};
+  const all=JSON.parse(localStorage.getItem('escape_subs')||'[]');
+  all.push(submission);
+  localStorage.setItem('escape_subs',JSON.stringify(all));
+  sendToTeacher(submission);
+  solveLock('lock3');
+  // Show escaped screen with Slido posting instructions
+  document.getElementById('escapedScreen').classList.add('show');
+  document.getElementById('escapedTeamName').textContent=team+' — '+members;
+  document.getElementById('finalTime').textContent=elapsed;
+  document.getElementById('submitFinal').disabled=true;
+  document.getElementById('submitFinal').textContent='✓ ESCAPED!';
+  updateProgress();
+  clearInterval(timerInt);
+  document.getElementById('lockStatus').textContent='✅ Escaped — '+elapsed;
+  // Show Slido posting reminder
+  document.getElementById('slidoReminder').style.display='block';
+}
+
+// ══ EMAIL SUBMISSION ════════════════════════════════════════
+const TEACHER_EMAIL='your.email@school.edu'; // ← CHANGE THIS
+function sendToTeacher(data){
+  const subject=encodeURIComponent(`[Escape the Page] ${data.team} — ${data.elapsed}`);
+  const body=encodeURIComponent(`TEAM: ${data.team}\nMEMBERS: ${data.members}\nTIME: ${data.elapsed}\nLOCK 1 SCORE: ${data.matchScore}/6\n\nLOCK 2 — DEVICES FOUND:\n${data.devicesFound}\n\nLOCK 3 — REWRITE:\n${data.rewrite}\n\nDEVICES USED: ${data.devicesUsed}`);
+  window.open(`mailto:${TEACHER_EMAIL}?subject=${subject}&body=${body}`);
+}
+
+// ══ HELPERS ═════════════════════════════════════════════════
+function solveLock(id){
+  const lock=document.getElementById(id);
+  lock.classList.add('solved');
+  lock.querySelector('.lock-icon').textContent='🔓';
+  updateProgress();updateLockStatus();
+}
+function updateProgress(){
+  const n=document.querySelectorAll('.lock.solved').length;
+  const bar=document.getElementById('progressBar');
+  bar.style.width=(n/3*100)+'%';
+  bar.style.background=n===3?'var(--green)':'var(--red)';
+}
+function updateLockStatus(){
+  const labels=['lock1','lock2','lock3'].map(id=>document.getElementById(id).classList.contains('solved')?'🔓':'🔒');
+  document.getElementById('lockStatus').textContent=`${labels[0]} Lock 1 · ${labels[1]} Lock 2 · ${labels[2]} Lock 3`;
+}
+</script>
+</body>
+</html>
