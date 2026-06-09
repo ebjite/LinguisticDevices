@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Midterm Presentation Rubric — HUMN 110</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:ital,wght@0,400;0,600;0,700;1,400&family=DM+Mono&display=swap');
+
+:root {
+  --ink:    #1C1208;
+  --bg:     #F4EEE2;
+  --paper:  #FDFAF5;
+  --gold:   #96650A;
+  --red:    #8B1A1A;
+  --green:  #1A5A1A;
+  --border: #C8B898;
+  --dim:    #7A6A58;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: 'DM Sans', sans-serif; background: var(--bg); color: var(--ink); font-size: 14px; line-height: 1.5; }
+
+.page { max-width: 900px; margin: 0 auto; padding: 2rem 1.5rem 3rem; }
+
+/* Header */
+.hdr { border-bottom: 3px solid var(--ink); padding-bottom: 1rem; margin-bottom: 1.5rem; }
+.hdr-kicker { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 3px; color: var(--gold); text-transform: uppercase; margin-bottom: 0.3rem; }
+.hdr h1 { font-family: 'Playfair Display', serif; font-size: 2rem; line-height: 1.1; }
+.hdr-meta { font-size: 13px; color: var(--dim); margin-top: 0.4rem; }
+
+/* Student strip */
+.student-strip { display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 1rem; margin-bottom: 1.5rem; }
+.field label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--dim); display: block; margin-bottom: 2px; }
+.field-line { border-bottom: 1.5px solid var(--border); height: 24px; }
+
+/* Rubric table */
+.rubric-table { width: 100%; border-collapse: collapse; margin-bottom: 1.5rem; }
+.rubric-table th { background: var(--ink); color: #F4EEE2; padding: 0.55rem 0.75rem; font-size: 12px; letter-spacing: 1px; text-transform: uppercase; text-align: left; font-weight: 700; }
+.rubric-table th:first-child { width: 22%; }
+.rubric-table th.score-col { width: 8%; text-align: center; }
+.rubric-table td { padding: 0.7rem 0.75rem; border: 1px solid var(--border); vertical-align: top; font-size: 13px; }
+.rubric-table tr:nth-child(even) td { background: #FAF6EE; }
+
+.criterion { font-weight: 700; color: var(--ink); margin-bottom: 0.2rem; }
+.theory-tag { display: inline-block; font-size: 10px; font-family: 'DM Mono', monospace; color: var(--gold); background: #FDF6E8; border: 1px solid var(--gold); border-radius: 2px; padding: 1px 5px; margin-top: 2px; }
+
+.col-exc  { background: #EDF8ED !important; }
+.col-good { background: #EEF4FF !important; }
+.col-dev  { background: #FFF8EE !important; }
+.col-beg  { background: #FFF0EE !important; }
+
+.score-box {
+  width: 36px; height: 36px; border: 1.5px solid var(--border);
+  border-radius: 3px; margin: 0 auto; background: white;
+}
+
+/* Level headers */
+.level-hdr { font-size: 11px; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.3rem; }
+.exc  { color: var(--green); }
+.good { color: var(--gold); }
+.dev  { color: #6B4A10; }
+.beg  { color: var(--red); }
+
+/* Score totals */
+.totals { background: var(--paper); border: 2px solid var(--ink); border-radius: 4px; padding: 1rem 1.25rem; margin-bottom: 1.5rem; display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; }
+.total-box { text-align: center; }
+.total-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--dim); }
+.total-num { font-family: 'Playfair Display', serif; font-size: 2.5rem; color: var(--ink); border-bottom: 2px solid var(--border); margin: 0.2rem auto; width: 60px; text-align: center; }
+
+/* Comments */
+.comments-box { border: 1.5px solid var(--border); border-radius: 4px; padding: 1rem; background: var(--paper); }
+.comments-box h3 { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: var(--dim); margin-bottom: 0.75rem; }
+.comment-line { border-bottom: 1px solid var(--border); height: 28px; margin-bottom: 2px; }
+
+/* Grade scale */
+.grade-scale { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+.grade-chip { padding: 4px 12px; border-radius: 3px; font-size: 12px; font-weight: 700; font-family: 'DM Mono', monospace; }
+
+@media print {
+  body { background: white; font-size: 12px; }
+  .page { padding: 1rem; }
+  .score-box { border: 1.5px solid #888; }
+  .rubric-table th { background: #333; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .col-exc, .col-good, .col-dev, .col-beg { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<div class="hdr">
+  <div class="hdr-kicker">HUMN 110 · Arts &amp; Culture · Midterm</div>
+  <h1>Presentation Rubric</h1>
+  <div class="hdr-meta">Total: 40 points &nbsp;·&nbsp; Weight: 30% of final grade &nbsp;·&nbsp; Duration: 4–6 minutes</div>
+</div>
+
+<div class="student-strip">
+  <div class="field"><label>Student Name</label><div class="field-line"></div></div>
+  <div class="field"><label>Date</label><div class="field-line"></div></div>
+  <div class="field"><label>Artwork Title</label><div class="field-line"></div></div>
+</div>
+
+<!-- Grade scale -->
+<div class="grade-scale">
+  <div class="grade-chip" style="background:#EDF8ED;color:#1A5A1A;">Excellent  9–10</div>
+  <div class="grade-chip" style="background:#EEF4FF;color:#1A3A82;">Good  7–8</div>
+  <div class="grade-chip" style="background:#FFF8EE;color:#6B4A10;">Developing  5–6</div>
+  <div class="grade-chip" style="background:#FFF0EE;color:#8B1A1A;">Beginning  0–4</div>
+</div>
+
+<table class="rubric-table">
+  <thead>
+    <tr>
+      <th>Criterion</th>
+      <th class="col-exc">Excellent<br><span style="font-weight:400;font-size:10px;">9–10 pts</span></th>
+      <th class="col-good">Good<br><span style="font-weight:400;font-size:10px;">7–8 pts</span></th>
+      <th class="col-dev">Developing<br><span style="font-weight:400;font-size:10px;">5–6 pts</span></th>
+      <th class="col-beg">Beginning<br><span style="font-weight:400;font-size:10px;">0–4 pts</span></th>
+      <th class="score-col">Score</th>
+    </tr>
+  </thead>
+  <tbody>
+
+    <tr>
+      <td>
+        <div class="criterion">Story &amp; Structure</div>
+        <div class="theory-tag">Wallas: all 4 stages</div>
+      </td>
+      <td class="col-exc">Clear narrative arc through all 4 Wallas stages. Inspiration, exploration, decision and reflection all present and connected. Reveal held until the end.</td>
+      <td class="col-good">Most stages present. Some connections between stages. Reveal is at or near the end.</td>
+      <td class="col-dev">Basic structure present but stages feel disconnected or out of order. Reveal may come too early.</td>
+      <td class="col-beg">Little or no structure. Stages missing or unclear. No narrative arc.</td>
+      <td><div class="score-box"></div></td>
+    </tr>
+
+    <tr>
+      <td>
+        <div class="criterion">Concept &amp; Intent</div>
+        <div class="theory-tag">Hall: encoding</div>
+      </td>
+      <td class="col-exc">Concept is clear and personally meaningful. Intended emotions are specific and explained. Genre identified. Message held until the final slide.</td>
+      <td class="col-good">Concept is clear. Emotions and genre mentioned but not fully explained. Message mostly held.</td>
+      <td class="col-dev">Concept is vague or generic. Emotions not clearly linked to artistic decisions. Message revealed too early.</td>
+      <td class="col-beg">Concept unclear or not stated. No discussion of intent or message.</td>
+      <td><div class="score-box"></div></td>
+    </tr>
+
+    <tr>
+      <td>
+        <div class="criterion">Technical Knowledge</div>
+      </td>
+      <td class="col-exc">Materials, process and tools described accurately and specifically. Shows genuine understanding of the medium and craft decisions made.</td>
+      <td class="col-good">Materials and process described. Some specificity. One or two gaps but overall clear.</td>
+      <td class="col-dev">General description only. Missing key technical details or inaccurate about process.</td>
+      <td class="col-beg">Very limited or no technical description. Process unclear.</td>
+      <td><div class="score-box"></div></td>
+    </tr>
+
+    <tr>
+      <td>
+        <div class="criterion">Reflection &amp; Honesty</div>
+        <div class="theory-tag">Wallas: verification</div>
+      </td>
+      <td class="col-exc">Genuine, specific reflection on what worked and what did not. Intended vs actual outcome compared honestly. Concrete improvement identified.</td>
+      <td class="col-good">Some reflection present. Comparison of intent and result attempted. Improvement mentioned.</td>
+      <td class="col-dev">Reflection is superficial ("it was good"). No comparison of intent and result. Improvement not addressed.</td>
+      <td class="col-beg">No meaningful reflection. No self-assessment.</td>
+      <td><div class="score-box"></div></td>
+    </tr>
+
+    <tr>
+      <td>
+        <div class="criterion">Audience &amp; Theory</div>
+        <div class="theory-tag">Hall: decoding</div>
+      </td>
+      <td class="col-exc">Audience response discussed with reference to Hall's theory. Demonstrates understanding that different viewers decode differently. Cultural or personal context considered.</td>
+      <td class="col-good">Audience response mentioned. Some connection to Hall's theory attempted. Decoding referenced.</td>
+      <td class="col-dev">Audience mentioned but no theoretical connection made. Hall's theory not used or used incorrectly.</td>
+      <td class="col-beg">No discussion of audience or decoding theory.</td>
+      <td><div class="score-box"></div></td>
+    </tr>
+
+    <tr>
+      <td>
+        <div class="criterion">AI Documentation</div>
+      </td>
+      <td class="col-exc">All AI use clearly declared with specific prompts, outputs and reflections on how AI shaped decisions. Distinction between AI as tool vs substitute is explicit.</td>
+      <td class="col-good">AI use declared. Some prompts or outputs described. Could be more specific.</td>
+      <td class="col-dev">AI use declared but vaguely. No reflection on how it influenced work.</td>
+      <td class="col-beg">AI used but not declared, OR AI used as a substitute for making the artwork.</td>
+      <td><div class="score-box"></div></td>
+    </tr>
+
+    <tr>
+      <td>
+        <div class="criterion">Delivery</div>
+      </td>
+      <td class="col-exc">Confident, clear and engaging. Speaks to the audience, not the screen. Timing within 4–6 minutes. Invites questions.</td>
+      <td class="col-good">Mostly confident. Occasional reading from notes. Timing slightly off but close. Questions welcomed.</td>
+      <td class="col-dev">Hesitant or reads entirely from notes. Hard to follow at times. Timing significantly over or under.</td>
+      <td class="col-beg">Very difficult to follow. Inaudible or very short. No audience engagement.</td>
+      <td><div class="score-box"></div></td>
+    </tr>
+
+  </tbody>
+</table>
+
+<div class="totals">
+  <div class="total-box">
+    <div class="total-label">Story &amp; Concept</div>
+    <div class="total-num"></div>
+    <div style="font-size:11px;color:var(--dim);">/ 20 pts</div>
+  </div>
+  <div class="total-box">
+    <div class="total-label">Technical + Reflection</div>
+    <div class="total-num"></div>
+    <div style="font-size:11px;color:var(--dim);">/ 20 pts</div>
+  </div>
+  <div class="total-box">
+    <div class="total-label">Theory + AI + Delivery</div>
+    <div class="total-num"></div>
+    <div style="font-size:11px;color:var(--dim);">/ 20 pts</div>
+  </div>
+  <div class="total-box">
+    <div class="total-label" style="font-weight:900;color:var(--ink);">FINAL TOTAL</div>
+    <div class="total-num" style="font-size:3rem;border-color:var(--ink);"></div>
+    <div style="font-size:11px;color:var(--dim);">/ 40 pts</div>
+  </div>
+</div>
+
+<div class="comments-box">
+  <h3>Teacher Comments</h3>
+  <div style="color:var(--gold);font-size:12px;font-weight:700;margin-bottom:0.4rem;">STRONGEST MOMENT:</div>
+  <div class="comment-line"></div>
+  <div class="comment-line"></div>
+  <div style="color:var(--gold);font-size:12px;font-weight:700;margin:0.75rem 0 0.4rem;">ONE THING TO IMPROVE:</div>
+  <div class="comment-line"></div>
+  <div class="comment-line"></div>
+  <div style="color:var(--gold);font-size:12px;font-weight:700;margin:0.75rem 0 0.4rem;">ADDITIONAL NOTES:</div>
+  <div class="comment-line"></div>
+  <div class="comment-line"></div>
+  <div class="comment-line"></div>
+  <div style="margin-top:1.5rem;display:flex;gap:2rem;">
+    <div style="flex:1;"><div style="font-size:11px;color:var(--dim);font-weight:700;letter-spacing:1px;margin-bottom:2px;">TEACHER SIGNATURE</div><div class="comment-line"></div></div>
+    <div style="flex:1;"><div style="font-size:11px;color:var(--dim);font-weight:700;letter-spacing:1px;margin-bottom:2px;">DATE RETURNED</div><div class="comment-line"></div></div>
+  </div>
+</div>
+
+</div>
+</body>
+</html>
